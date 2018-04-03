@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  webapiboilerplate:
+    image: webapiboilerplate
+    build:
+      context: .
+      dockerfile: WebApiBoilerplate/Dockerfile
+  mssql:
+    image: microsoft/mssql-server-linux
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=wiEPzF9pXnuVuejTN3p7
+      - MSSQL_PID=Express
+    ports:
+      - 1433:1433

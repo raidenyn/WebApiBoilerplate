@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebApiBoilerplate.DataModel\WebApiBoilerplate.DataModel.csproj" />
+    <ProjectReference Include="..\WebApiBoilerplate.Protocol\WebApiBoilerplate.Protocol.csproj" />
+  </ItemGroup>
+
+</Project>
