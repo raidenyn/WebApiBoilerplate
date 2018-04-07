@@ -11,10 +11,10 @@ namespace WebApiBoilerplate.Framework.Database
     {
         public virtual long Id { get; protected set; }
 
-        public ISession Session { get; private set; }
+        public ISession Session { get; protected internal set; }
 
         [Serializable]
-        public class SetSessionToObject : IPostLoadEventListener, IPersistEventListener, ILoadEventListener
+        internal class SetSessionToObject : IPostLoadEventListener, IPersistEventListener, ILoadEventListener
         {
             public void OnPostLoad(PostLoadEvent @event)
             {
@@ -67,5 +67,4 @@ namespace WebApiBoilerplate.Framework.Database
             }
         }
     }
-
 }

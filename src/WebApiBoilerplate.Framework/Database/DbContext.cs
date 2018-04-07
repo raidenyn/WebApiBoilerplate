@@ -28,7 +28,7 @@ namespace WebApiBoilerplate.Framework.Database
 
         private bool IsCommitable => _transaction.IsActive && Session.IsOpen && Session.IsConnected;
 
-        public Task CommitAsync()
+        Task ITransactionContext.CommitAsync()
         {
             if (IsCommitable)
             {
@@ -38,7 +38,7 @@ namespace WebApiBoilerplate.Framework.Database
             return Task.CompletedTask;
         }
 
-        public Task RollbackAsync()
+        Task ITransactionContext.RollbackAsync()
         {
             if (IsCommitable)
             {
@@ -48,7 +48,7 @@ namespace WebApiBoilerplate.Framework.Database
             return Task.CompletedTask;
         }
 
-        public void Dispose()
+        void IDisposable.Dispose()
         {
             if (IsCommitable)
             {

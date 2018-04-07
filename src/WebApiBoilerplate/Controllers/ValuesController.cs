@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
+using NHibernate.Linq;
 using WebApiBoilerplate.DataModel;
 
 namespace WebApiBoilerplate.Controllers
@@ -20,11 +21,11 @@ namespace WebApiBoilerplate.Controllers
 
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<string>> Get()
         {
             var users = _dbContext.Session.Query<User>().Select(u => u.FirstName);
 
-            return users.ToArray();
+            return await users.ToListAsync();
         }
 
         // GET api/values/5
@@ -36,8 +37,16 @@ namespace WebApiBoilerplate.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<long> Post([FromBody]string name)
         {
+            var user = DataModel.User.Create(_dbContext);
+
+            user.FirstName = name;
+            user.LastName = name;
+
+            await user.SaveAsync();
+
+            return user.Id;
         }
 
         // PUT api/values/5

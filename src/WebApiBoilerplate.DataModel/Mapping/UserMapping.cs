@@ -2,7 +2,7 @@
 
 namespace WebApiBoilerplate.DataModel.Mapping
 {
-    public class UserMapping: PersistentClassMapping<User>
+    public class UserMapping: DbObjectClassMapping<User>
     {
         public UserMapping()
         {

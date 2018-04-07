@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using NHibernate.Connection;
 using NHibernate.Dialect;
 using NHibernate.Driver;
 using WebApiBoilerplate.DataModel;
 using WebApiBoilerplate.Framework.Database;
+using WebApiBoilerplate.Framework.Web;
 
 namespace WebApiBoilerplate
 {
@@ -22,6 +25,12 @@ namespace WebApiBoilerplate
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging(options =>
+            {
+                options.AddConsole();
+                options.AddConfiguration(Configuration);
+            });
+
             services.AddNHibernateDbContext<WebApiBorilerplateDbContext>(config =>
             {
                 config.Connection(db =>
@@ -33,7 +42,10 @@ namespace WebApiBoilerplate
                 });
             });
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<NHibernateTransactionActionFilter>();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +55,8 @@ namespace WebApiBoilerplate
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseNHibernateTransactionMiddleware<WebApiBorilerplateDbContext>();
 
             app.UseMvc();
         }
