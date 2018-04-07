@@ -26,7 +26,7 @@ namespace WebApiBoilerplate
             {
                 config.Connection(db =>
                 {
-                    db.ConnectionString = @"Data Source=mssql;Initial Catalog=WebApiBoilerplate.Database;Persist Security Info=True;User ID=sa;Password=wiEPzF9pXnuVuejTN3p7;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True";
+                    db.ConnectionString = @"Data Source=mssql;Initial Catalog=WebApiBoilerplate.Database;Persist Security Info=True;User ID=sa;Password=wiEPzF9pXnuVuejTN3p7;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=10;Encrypt=False;TrustServerCertificate=True";
                     db.Dialect<MsSql2012Dialect>();
                     db.Driver<Sql2008ClientDriver>();
                     db.ConnectionProvider<DriverConnectionProvider>();

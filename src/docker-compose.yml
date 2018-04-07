@@ -13,4 +13,8 @@ services:
       - SA_PASSWORD=wiEPzF9pXnuVuejTN3p7
       - MSSQL_PID=Express
     ports:
-      - 1433:1433
+      - 14336:1433
+    volumes:
+      - db-data:/var/opt/mssql/data
+volumes:
+  db-data:
