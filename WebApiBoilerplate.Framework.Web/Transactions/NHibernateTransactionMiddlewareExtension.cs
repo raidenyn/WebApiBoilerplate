@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using WebApiBoilerplate.Framework.Database;
 
-namespace WebApiBoilerplate.Framework.Web
+namespace WebApiBoilerplate.Framework.Web.Transactions
 {
     public static class NHibernateTransactionMiddlewareExtension
     {

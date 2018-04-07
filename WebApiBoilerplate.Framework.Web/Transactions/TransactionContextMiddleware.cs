@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using WebApiBoilerplate.Framework.Database;
 
-namespace WebApiBoilerplate.Framework.Web
+namespace WebApiBoilerplate.Framework.Web.Transactions
 {
     public class TransactionContextMiddleware<TDbContext>
         where TDbContext : DbContext<TDbContext>

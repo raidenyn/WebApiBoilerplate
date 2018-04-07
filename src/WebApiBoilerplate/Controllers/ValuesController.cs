@@ -44,7 +44,7 @@ namespace WebApiBoilerplate.Controllers
             user.FirstName = name;
             user.LastName = name;
 
-            await user.SaveAsync();
+            await user.SaveAsync(withFlush: true);
 
             return user.Id;
         }

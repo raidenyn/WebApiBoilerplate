@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace WebApiBoilerplate.Framework.Web
+namespace WebApiBoilerplate.Framework.Web.Transactions
 {
     public class NHibernateTransactionActionFilter : IExceptionFilter
     {

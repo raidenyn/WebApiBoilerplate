@@ -7,9 +7,11 @@ using Microsoft.Extensions.Logging;
 using NHibernate.Connection;
 using NHibernate.Dialect;
 using NHibernate.Driver;
+using WebApiBoilerplate.ActionFilters;
 using WebApiBoilerplate.DataModel;
 using WebApiBoilerplate.Framework.Database;
 using WebApiBoilerplate.Framework.Web;
+using WebApiBoilerplate.Framework.Web.Transactions;
 
 namespace WebApiBoilerplate
 {
@@ -27,7 +29,6 @@ namespace WebApiBoilerplate
         {
             services.AddLogging(options =>
             {
-                options.AddConsole();
                 options.AddConfiguration(Configuration);
             });
 
@@ -45,6 +46,7 @@ namespace WebApiBoilerplate
             services.AddMvc(options =>
             {
                 options.Filters.Add<NHibernateTransactionActionFilter>();
+                options.Filters.Add<ErrorFormmaterFilter>();
             });
         }
 

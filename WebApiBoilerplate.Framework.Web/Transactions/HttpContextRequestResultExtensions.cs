@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Http;
 
-namespace WebApiBoilerplate.Framework.Web
+namespace WebApiBoilerplate.Framework.Web.Transactions
 {
     public static class HttpContextRequestResultExtensions
     {

@@ -17,4 +17,8 @@
     <ProjectReference Include="..\src\WebApiBoilerplate.Framework\WebApiBoilerplate.Framework.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
+
 </Project>
