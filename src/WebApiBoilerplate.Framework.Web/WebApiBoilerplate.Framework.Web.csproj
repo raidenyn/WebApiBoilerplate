@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\WebApiBoilerplate.Framework\WebApiBoilerplate.Framework.csproj" />
+    <ProjectReference Include="..\WebApiBoilerplate.Framework\WebApiBoilerplate.Framework.csproj" />
   </ItemGroup>
 
   <ItemGroup>

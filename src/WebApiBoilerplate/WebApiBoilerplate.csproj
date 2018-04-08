@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\db\WebApiBoilerplate.Database\WebApiBoilerplate.Database.sqlproj" />
-    <ProjectReference Include="..\..\WebApiBoilerplate.Framework.Web\WebApiBoilerplate.Framework.Web.csproj" />
+    <ProjectReference Include="..\WebApiBoilerplate.Framework.Web\WebApiBoilerplate.Framework.Web.csproj" />
     <ProjectReference Include="..\WebApiBoilerplate.Core\WebApiBoilerplate.Core.csproj" />
   </ItemGroup>
 

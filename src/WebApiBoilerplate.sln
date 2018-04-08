@@ -23,7 +23,7 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "WebApiBoilerplate.Database"
 		{0633FD59-C017-4BE0-8590-8ED4F8E88FF4} = {0633FD59-C017-4BE0-8590-8ED4F8E88FF4}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiBoilerplate.Framework.Web", "..\WebApiBoilerplate.Framework.Web\WebApiBoilerplate.Framework.Web.csproj", "{3DB34E1F-8D89-4F9E-8219-F5E167D9D43D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiBoilerplate.Framework.Web", "WebApiBoilerplate.Framework.Web\WebApiBoilerplate.Framework.Web.csproj", "{3DB34E1F-8D89-4F9E-8219-F5E167D9D43D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
