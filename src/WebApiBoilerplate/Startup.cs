@@ -13,7 +13,9 @@ using WebApiBoilerplate.ActionFilters;
 using WebApiBoilerplate.Core;
 using WebApiBoilerplate.DataModel;
 using WebApiBoilerplate.Framework.Database;
+using WebApiBoilerplate.Framework.Utils;
 using WebApiBoilerplate.Framework.Web.Transactions;
+using WebApiBoilerplate.Protocol;
 using WebApiBoilerplate.Swagger;
 
 namespace WebApiBoilerplate
@@ -62,9 +64,11 @@ namespace WebApiBoilerplate
                     Version = "v1",
                 });
                 options.OperationFilter<ErrorOperationFilter>();
+                options.SchemaFilter<FluentValidationRules>();
                 options.DescribeAllEnumsAsStrings();
                 options.DescribeAllParametersInCamelCase();
                 options.DescribeStringEnumsInCamelCase();
+                options.IncludeXmlComments(typeof(ObjectInfo).Assembly.DocumentationXmlPath());
             });
         }
 
@@ -85,6 +89,9 @@ namespace WebApiBoilerplate
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApiBoilerplate API v1");
+                options.EnableFilter();
+                options.EnableValidator();
+                options.ShowExtensions();
             });
         }
     }
