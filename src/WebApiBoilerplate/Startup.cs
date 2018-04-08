@@ -8,13 +8,13 @@ using Microsoft.Extensions.Logging;
 using NHibernate.Connection;
 using NHibernate.Dialect;
 using NHibernate.Driver;
+using Swashbuckle.AspNetCore.Swagger;
 using WebApiBoilerplate.ActionFilters;
 using WebApiBoilerplate.Core;
 using WebApiBoilerplate.DataModel;
 using WebApiBoilerplate.Framework.Database;
-using WebApiBoilerplate.Framework.Services;
-using WebApiBoilerplate.Framework.Web;
 using WebApiBoilerplate.Framework.Web.Transactions;
+using WebApiBoilerplate.Swagger;
 
 namespace WebApiBoilerplate
 {
@@ -53,6 +53,19 @@ namespace WebApiBoilerplate
                 options.Filters.Add<NHibernateTransactionActionFilter>();
                 options.Filters.Add<ErrorFormmaterFilter>();
             });
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Info
+                {
+                    Title = "WebApiBoilerplate API", 
+                    Version = "v1",
+                });
+                options.OperationFilter<ErrorOperationFilter>();
+                options.DescribeAllEnumsAsStrings();
+                options.DescribeAllParametersInCamelCase();
+                options.DescribeStringEnumsInCamelCase();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +79,13 @@ namespace WebApiBoilerplate
             app.UseNHibernateTransactionMiddleware<WebApiBorilerplateDbContext>();
 
             app.UseMvc();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApiBoilerplate API v1");
+            });
         }
     }
 }
