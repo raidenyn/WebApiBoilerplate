@@ -1,31 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
-using NHibernate.Linq;
-using WebApiBoilerplate.DataModel;
+using WebApiBoilerplate.Core.Services;
+using WebApiBoilerplate.Protocol;
 
 namespace WebApiBoilerplate.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        private readonly WebApiBorilerplateDbContext _dbContext;
+        private readonly IUserRepository _userRepository;
 
-        public ValuesController([NotNull] WebApiBorilerplateDbContext dbContext)
+        public ValuesController([NotNull] IUserRepository userRepository)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
         // GET api/values
         [HttpGet]
-        public async Task<IEnumerable<string>> Get()
+        public Task<PagedList<UserInfo>> Get([FromQuery] ListUserRequest request)
         {
-            var users = _dbContext.Session.Query<User>().Select(u => u.FirstName);
-
-            return await users.ToListAsync();
+            return _userRepository.ListAsync(request);
         }
 
         // GET api/values/5
@@ -37,16 +33,9 @@ namespace WebApiBoilerplate.Controllers
 
         // POST api/values
         [HttpPost]
-        public async Task<long> Post([FromBody]string name)
+        public Task<ObjectInfo> Post([FromBody] CreateUserRequest request)
         {
-            var user = DataModel.User.Create(_dbContext);
-
-            user.FirstName = name;
-            user.LastName = name;
-
-            await user.SaveAsync(withFlush: true);
-
-            return user.Id;
+            return _userRepository.CreateAsync(request);
         }
 
         // PUT api/values/5

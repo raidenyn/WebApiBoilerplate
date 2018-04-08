@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection.Emit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -8,8 +9,10 @@ using NHibernate.Connection;
 using NHibernate.Dialect;
 using NHibernate.Driver;
 using WebApiBoilerplate.ActionFilters;
+using WebApiBoilerplate.Core;
 using WebApiBoilerplate.DataModel;
 using WebApiBoilerplate.Framework.Database;
+using WebApiBoilerplate.Framework.Services;
 using WebApiBoilerplate.Framework.Web;
 using WebApiBoilerplate.Framework.Web.Transactions;
 
@@ -42,6 +45,8 @@ namespace WebApiBoilerplate
                     db.ConnectionProvider<DriverConnectionProvider>();
                 });
             });
+
+            services.AddCoreServices();
 
             services.AddMvc(options =>
             {
