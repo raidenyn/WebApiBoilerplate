@@ -10,6 +10,8 @@ namespace WebApiBoilerplate.Swagger
 {
     public class FluentValidationRules : ISchemaFilter
     {
+        private static readonly PropertyNameComparer PropertyNameComparer = new PropertyNameComparer();
+
         public void Apply(Schema model, SchemaFilterContext context)
         {
             var validatorType = context.SystemType.GetNestedType("Validator");
@@ -28,15 +30,19 @@ namespace WebApiBoilerplate.Swagger
 
             model.Required = model.Required ?? new List<string>();
 
+            var members = validatorDescriptor.GetMembersWithValidators()
+                .ToDictionary(p => p.Key, PropertyNameComparer);
+
             foreach (var key in model.Properties.Keys)
             {
-                var name = key[0].ToString().ToUpperInvariant() + key.Substring(1);
-
-                foreach (var validatorRule in validatorDescriptor.GetValidatorsForMember(name))
+                if (members.TryGetValue(key, out var validators))
                 {
-                    if (validatorRule is NotNullValidator)
+                    foreach (var validatorRule in validators)
                     {
-                        model.Required.Add(key);
+                        if (validatorRule is NotNullValidator)
+                        {
+                            model.Required.Add(key);
+                        }
                     }
                 }
             }

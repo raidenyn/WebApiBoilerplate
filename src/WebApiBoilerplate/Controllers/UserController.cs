@@ -2,18 +2,18 @@
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using WebApiBoilerplate.Core.Services;
 using WebApiBoilerplate.Protocol;
 
 namespace WebApiBoilerplate.Controllers
 {
-    [Route("api/[controller]")]
-    public class ValuesController : Controller
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/users")]
+    public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
 
-        public ValuesController([NotNull] IUserRepository userRepository)
+        public UserController([NotNull] IUserRepository userRepository)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }

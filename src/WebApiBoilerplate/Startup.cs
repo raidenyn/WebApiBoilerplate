@@ -1,7 +1,6 @@
-﻿using System;
-using System.Reflection.Emit;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -50,6 +49,16 @@ namespace WebApiBoilerplate
 
             services.AddCoreServices();
 
+            services.AddMvcCore().AddVersionedApiExplorer(
+                options =>
+                {
+                    options.GroupNameFormat = "'v'VVV";
+
+                    // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
+                    // can also be used to control the format of the API version in route templates
+                    options.SubstituteApiVersionInUrl = true;
+                });
+
             services.AddMvc(options =>
             {
                 options.Filters.Add<NHibernateTransactionActionFilter>();
@@ -64,11 +73,17 @@ namespace WebApiBoilerplate
                     Version = "v1",
                 });
                 options.OperationFilter<ErrorOperationFilter>();
+                options.OperationFilter<SwaggerDefaultValues>();
                 options.SchemaFilter<FluentValidationRules>();
                 options.DescribeAllEnumsAsStrings();
                 options.DescribeAllParametersInCamelCase();
                 options.DescribeStringEnumsInCamelCase();
                 options.IncludeXmlComments(typeof(ObjectInfo).Assembly.DocumentationXmlPath());
+            });
+
+            services.AddApiVersioning(options =>
+            {
+                options.ReportApiVersions = true;
             });
         }
 
