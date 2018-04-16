@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,6 +9,7 @@ using NHibernate.Dialect;
 using NHibernate.Driver;
 using Swashbuckle.AspNetCore.Swagger;
 using WebApiBoilerplate.ActionFilters;
+using WebApiBoilerplate.Controllers;
 using WebApiBoilerplate.Core;
 using WebApiBoilerplate.DataModel;
 using WebApiBoilerplate.Framework.Database;
@@ -60,8 +62,13 @@ namespace WebApiBoilerplate
 
             services.AddMvc(options =>
             {
+                options.Filters.Add<RequestValidationFilter>();
                 options.Filters.Add<NHibernateTransactionActionFilter>();
                 options.Filters.Add<ErrorFormmaterFilter>();
+            }).AddFluentValidation(options =>
+            {
+                options.RegisterValidatorsFromAssemblyContaining<ObjectInfo>();
+                options.ImplicitlyValidateChildProperties = true;
             });
 
             services.AddSwaggerGen(options =>
@@ -78,6 +85,7 @@ namespace WebApiBoilerplate
                 options.DescribeAllParametersInCamelCase();
                 options.DescribeStringEnumsInCamelCase();
                 options.IncludeXmlComments(typeof(ObjectInfo).Assembly.DocumentationXmlPath());
+                options.IncludeXmlComments(typeof(UserController).Assembly.DocumentationXmlPath());
             });
 
             services.AddApiVersioning(options =>

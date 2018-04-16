@@ -18,12 +18,20 @@ namespace WebApiBoilerplate.Controllers
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
+        /// <summary>
+        /// Returns list of users with filtering 
+        /// </summary>
         [HttpGet]
         public Task<PagedList<UserInfo>> List([FromQuery] ListUserRequest request)
         {
             return _userRepository.ListAsync(request);
         }
 
+        /// <summary>
+        /// Returns full data of the user by ID
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpGet("{id:int}")]
         public Task<User> Get(GetUserRequest request)
         {
@@ -37,9 +45,8 @@ namespace WebApiBoilerplate.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public Task Update(long id, [FromBody] UpdateUserRequest request)
+        public Task Update([FromBody] UpdateUserRequest request)
         {
-            request.Id = id;
             return _userRepository.UpdateAsync(request);
         }
 
