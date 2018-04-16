@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System;
+using FluentValidation;
 using JetBrains.Annotations;
 
 namespace WebApiBoilerplate.Protocol
@@ -43,6 +44,11 @@ namespace WebApiBoilerplate.Protocol
         /// User's last name
         /// </summary>
         public string LastName { get; set; }
+
+        /// <summary>
+        /// Time of user creation
+        /// </summary>
+        public DateTime CreatedAt { get; set; }
     }
 
     /// <summary>
@@ -74,6 +80,17 @@ namespace WebApiBoilerplate.Protocol
     }
 
     /// <summary>
+    /// Get full user data
+    /// </summary>
+    public class GetUserRequest
+    {
+        /// <summary>
+        /// ID of the user
+        /// </summary>
+        public long Id { get; set; }
+    }
+
+    /// <summary>
     /// Request for creation of new user
     /// </summary>
     public class CreateUserRequest
@@ -102,6 +119,76 @@ namespace WebApiBoilerplate.Protocol
                 RuleFor(request => request).NotNull();
                 RuleFor(request => request.FirstName).NotNull().NotEmpty();
                 RuleFor(request => request.LastName).NotNull().NotEmpty();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Request for updaing exists user
+    /// </summary>
+    public class UpdateUserRequest
+    {
+        /// <summary>
+        /// Global User Id
+        /// </summary>
+        public long Id { get; set; }
+
+        /// <summary>
+        /// User's first name
+        /// </summary>
+        public string FirstName { get; set; }
+
+        /// <summary>
+        /// User's last name
+        /// </summary>
+        public string LastName { get; set; }
+
+
+        /// <summary>
+        /// Validator
+        /// </summary>
+        public class Validator : AbstractValidator<UpdateUserRequest>
+        {
+            /// <summary>
+            /// Default
+            /// </summary>
+            public Validator()
+            {
+                RuleFor(request => request).NotNull();
+                RuleFor(request => request.Id).GreaterThan(0);
+                RuleFor(request => request.FirstName).NotNull().NotEmpty();
+                RuleFor(request => request.LastName).NotNull().NotEmpty();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Request for removing exists user
+    /// </summary>
+    public class RemoveUserRequest
+    {
+        /// <summary>
+        /// Global User Id
+        /// </summary>
+        public long Id { get; set; }
+
+        /// <summary>
+        /// --
+        /// </summary>
+        public bool Full { get; set; }
+
+        /// <summary>
+        /// Validator
+        /// </summary>
+        public class Validator : AbstractValidator<RemoveUserRequest>
+        {
+            /// <summary>
+            /// Default
+            /// </summary>
+            public Validator()
+            {
+                RuleFor(request => request).NotNull();
+                RuleFor(request => request.Id).GreaterThan(0);
             }
         }
     }

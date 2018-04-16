@@ -5,7 +5,7 @@
     <DockerTargetOS>Linux</DockerTargetOS>
     <ProjectGuid>0633fd59-c017-4be0-8590-8ed4f8e88ff4</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>http://localhost:{ServicePort}/api/values</DockerServiceUrl>
+    <DockerServiceUrl>http://localhost:{ServicePort}/api/v1.0/users</DockerServiceUrl>
     <DockerServiceName>webapiboilerplate</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>

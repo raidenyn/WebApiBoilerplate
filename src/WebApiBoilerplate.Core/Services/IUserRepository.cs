@@ -10,6 +10,13 @@ namespace WebApiBoilerplate.Core.Services
         Task<PagedList<UserInfo>> ListAsync([CanBeNull] ListUserRequest request);
 
         [ItemNotNull]
+        Task<User> GetAsync([NotNull] GetUserRequest request);
+
+        [ItemNotNull]
         Task<ObjectInfo> CreateAsync([NotNull] CreateUserRequest request);
+
+        Task UpdateAsync([NotNull] UpdateUserRequest request);
+
+        Task RemoveAsync([NotNull] RemoveUserRequest request);
     }
 }

@@ -18,37 +18,35 @@ namespace WebApiBoilerplate.Controllers
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
-        // GET api/values
         [HttpGet]
-        public Task<PagedList<UserInfo>> Get([FromQuery] ListUserRequest request)
+        public Task<PagedList<UserInfo>> List([FromQuery] ListUserRequest request)
         {
             return _userRepository.ListAsync(request);
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{id:int}")]
+        public Task<User> Get(GetUserRequest request)
         {
-            return "value";
+            return _userRepository.GetAsync(request);
         }
 
-        // POST api/values
         [HttpPost]
-        public Task<ObjectInfo> Post([FromBody] CreateUserRequest request)
+        public Task<ObjectInfo> Create([FromBody] CreateUserRequest request)
         {
             return _userRepository.CreateAsync(request);
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpPut("{id:int}")]
+        public Task Update(long id, [FromBody] UpdateUserRequest request)
         {
+            request.Id = id;
+            return _userRepository.UpdateAsync(request);
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{id:int}")]
+        public Task Remove(RemoveUserRequest request)
         {
+            return _userRepository.RemoveAsync(request);
         }
     }
 }

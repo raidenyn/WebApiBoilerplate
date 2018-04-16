@@ -30,6 +30,19 @@ namespace WebApiBoilerplate.Core.Services.Impl
             }, request);
         }
 
+        public async Task<Protocol.User> GetAsync(Protocol.GetUserRequest request)
+        {
+            var user = await _dbContext.Session.GetAsync<User>(request.Id);
+
+            return new Protocol.User
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                CreatedAt = user.CreatedAt,
+            };
+        }
+
         public async Task<Protocol.ObjectInfo> CreateAsync(Protocol.CreateUserRequest request)
         {
             var user = User.Create(_dbContext);
@@ -40,6 +53,23 @@ namespace WebApiBoilerplate.Core.Services.Impl
             await user.SaveAsync(withFlush: true);
 
             return user.ToObjectInfo();
+        }
+
+        public async Task UpdateAsync(Protocol.UpdateUserRequest request)
+        {
+            var user = await _dbContext.Session.GetAsync<User>(request.Id).ConfigureAwait(false);
+
+            user.FirstName = request.FirstName;
+            user.LastName = request.LastName;
+
+            await user.SaveAsync(withFlush: true).ConfigureAwait(false);
+        }
+
+        public Task RemoveAsync(Protocol.RemoveUserRequest request)
+        {
+            var user = _dbContext.Session.Get<User>(request.Id);
+
+            return user.RemoveAsync(withFlush: true);
         }
     }
 }
