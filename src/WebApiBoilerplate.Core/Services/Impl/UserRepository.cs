@@ -7,7 +7,7 @@ using WebApiBoilerplate.Framework.Services;
 
 namespace WebApiBoilerplate.Core.Services.Impl
 {
-    [Service]
+    [Service, UsedImplicitly]
     public class UserRepository: IUserRepository
     {
         [NotNull]
@@ -37,6 +37,7 @@ namespace WebApiBoilerplate.Core.Services.Impl
             return new Protocol.User
             {
                 Id = user.Id,
+                Login = user.Login,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 CreatedAt = user.CreatedAt,
@@ -47,6 +48,7 @@ namespace WebApiBoilerplate.Core.Services.Impl
         {
             var user = User.Create(_dbContext);
 
+            user.Login = request.Login;
             user.FirstName = request.FirstName;
             user.LastName = request.LastName;
 
@@ -59,6 +61,7 @@ namespace WebApiBoilerplate.Core.Services.Impl
         {
             var user = await _dbContext.Session.GetAsync<User>(request.Id).ConfigureAwait(false);
 
+            user.Login = request.Login;
             user.FirstName = request.FirstName;
             user.LastName = request.LastName;
 

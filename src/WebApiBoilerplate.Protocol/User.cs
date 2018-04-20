@@ -15,6 +15,11 @@ namespace WebApiBoilerplate.Protocol
         public long Id { get; set; }
 
         /// <summary>
+        /// User's main name
+        /// </summary>
+        public string Login { get; set; }
+
+        /// <summary>
         /// User's first name
         /// </summary>
         public string FirstName { get; set; }
@@ -34,6 +39,11 @@ namespace WebApiBoilerplate.Protocol
         /// Global User Id
         /// </summary>
         public long Id { get; set; }
+
+        /// <summary>
+        /// User's main name
+        /// </summary>
+        public string Login { get; set; }
 
         /// <summary>
         /// User's first name
@@ -96,6 +106,11 @@ namespace WebApiBoilerplate.Protocol
     public class CreateUserRequest
     {
         /// <summary>
+        /// User's login name
+        /// </summary>
+        public string Login { get; set; }
+
+        /// <summary>
         /// User's first name
         /// </summary>
         public string FirstName { get; set; }
@@ -117,8 +132,9 @@ namespace WebApiBoilerplate.Protocol
             public Validator()
             {
                 RuleFor(request => request).NotNull();
-                RuleFor(request => request.FirstName).NotNull().NotEmpty();
-                RuleFor(request => request.LastName).NotNull().NotEmpty();
+                RuleFor(request => request.Login).NotEmpty().MaximumLength(50);
+                RuleFor(request => request.FirstName).MaximumLength(50);
+                RuleFor(request => request.LastName).MaximumLength(50);
             }
         }
     }
@@ -132,6 +148,11 @@ namespace WebApiBoilerplate.Protocol
         /// Global User Id
         /// </summary>
         public long Id { get; set; }
+
+        /// <summary>
+        /// User's login name
+        /// </summary>
+        public string Login { get; set; }
 
         /// <summary>
         /// User's first name
@@ -156,8 +177,9 @@ namespace WebApiBoilerplate.Protocol
             {
                 RuleFor(request => request).NotNull();
                 RuleFor(request => request.Id).GreaterThan(0);
-                RuleFor(request => request.FirstName).NotNull().NotEmpty();
-                RuleFor(request => request.LastName).NotNull().NotEmpty();
+                RuleFor(request => request.Login).NotEmpty().MaximumLength(50);
+                RuleFor(request => request.FirstName).MaximumLength(50);
+                RuleFor(request => request.LastName).MaximumLength(50);
             }
         }
     }
@@ -171,11 +193,6 @@ namespace WebApiBoilerplate.Protocol
         /// Global User Id
         /// </summary>
         public long Id { get; set; }
-
-        /// <summary>
-        /// --
-        /// </summary>
-        public bool Full { get; set; }
 
         /// <summary>
         /// Validator

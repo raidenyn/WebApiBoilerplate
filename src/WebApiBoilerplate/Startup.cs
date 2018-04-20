@@ -1,6 +1,7 @@
 ﻿using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -11,6 +12,8 @@ using Swashbuckle.AspNetCore.Swagger;
 using WebApiBoilerplate.ActionFilters;
 using WebApiBoilerplate.Controllers;
 using WebApiBoilerplate.Core;
+using WebApiBoilerplate.Core.Authentication;
+using WebApiBoilerplate.Core.Authentication.Stores;
 using WebApiBoilerplate.DataModel;
 using WebApiBoilerplate.Framework.Database;
 using WebApiBoilerplate.Framework.Utils;
@@ -92,6 +95,18 @@ namespace WebApiBoilerplate
             {
                 options.ReportApiVersions = true;
             });
+
+            services.AddIdentityCore<AuthenticatedUser>(x =>
+                {
+
+                }).AddUserStore<AuthStore>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthentication(o =>
+            {
+                o.DefaultScheme = IdentityConstants.ApplicationScheme;
+                o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+            }).AddJwtBearer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -105,6 +120,8 @@ namespace WebApiBoilerplate
             app.UseNHibernateTransactionMiddleware<WebApiBorilerplateDbContext>();
 
             app.UseMvc();
+
+            app.UseAuthentication();
 
             app.UseSwagger();
 

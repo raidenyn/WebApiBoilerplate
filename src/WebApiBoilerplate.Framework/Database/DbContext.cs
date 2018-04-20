@@ -6,20 +6,16 @@ using NHibernate;
 
 namespace WebApiBoilerplate.Framework.Database
 {
-    public abstract class DbContext<TDbContext>: ITransactionContext
-        where TDbContext : DbContext<TDbContext>
+    public abstract class DbContext: ITransactionContext
     {
-        private readonly ILogger<DbContext<TDbContext>> _logger;
-
         [NotNull]
         public ISession Session { get; }
 
         private readonly ITransaction _transaction;
 
-        protected DbContext([NotNull] ISession session, [NotNull] ILogger<DbContext<TDbContext>> logger)
+        protected DbContext([NotNull] ISession session)
         {
             Session = session ?? throw new ArgumentNullException(nameof(session));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             session.FlushMode = FlushMode.Commit;
 
@@ -55,6 +51,17 @@ namespace WebApiBoilerplate.Framework.Database
                 _transaction.Rollback();
             }
             Session.Dispose();
+        }
+    }
+
+    public abstract class DbContext<TDbContext> : DbContext
+        where TDbContext : DbContext<TDbContext>
+    {
+        protected readonly ILogger<DbContext<TDbContext>> Logger;
+
+        protected DbContext([NotNull] ISession session, [NotNull] ILogger<DbContext<TDbContext>> logger) : base(session)
+        {
+            Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
     }
 }

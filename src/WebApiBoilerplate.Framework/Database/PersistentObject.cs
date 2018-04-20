@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using NHibernate;
 
@@ -28,21 +29,21 @@ namespace WebApiBoilerplate.Framework.Database
             return instance;
         }
 
-        public virtual async Task SaveAsync(bool withFlush = false)
+        public virtual async Task SaveAsync(bool withFlush = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Session.SaveOrUpdateAsync(this).ConfigureAwait(false);
+            await Session.SaveOrUpdateAsync(this, cancellationToken).ConfigureAwait(false);
             if (withFlush)
             {
-                await Session.FlushAsync().ConfigureAwait(false);
+                await Session.FlushAsync(cancellationToken).ConfigureAwait(false);
             }
         }
 
-        public virtual async Task DeleteAsync(bool withFlush = false)
+        public virtual async Task DeleteAsync(bool withFlush = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Session.DeleteAsync(this).ConfigureAwait(false);
+            await Session.DeleteAsync(this, cancellationToken).ConfigureAwait(false);
             if (withFlush)
             {
-                await Session.FlushAsync().ConfigureAwait(false);
+                await Session.FlushAsync(cancellationToken).ConfigureAwait(false);
             }
         }
     }
