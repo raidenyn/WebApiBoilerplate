@@ -1,8 +1,13 @@
-﻿using System.Net;
+﻿using System;
+using System.Linq;
+using System.Net;
+using System.Security.Authentication;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using WebApiBoilerplate.Framework;
 using WebApiBoilerplate.Protocol;
+using SystemException = WebApiBoilerplate.Framework.SystemException;
 
 namespace WebApiBoilerplate.ActionFilters
 {
@@ -14,37 +19,49 @@ namespace WebApiBoilerplate.ActionFilters
             {
                 case SystemException systemException:
                 {
-                    context.Result = GetResult(systemException);
-                    context.HttpContext.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+                    context.Result = new ObjectResult(GetError(systemException))
+                    {
+                        StatusCode = (int)HttpStatusCode.InternalServerError
+                    };
                 }
                     break;
                 
                 case WebApiBoilerplateException webApiException:
                 {
-                    context.Result = GetResult(webApiException);
-                    context.HttpContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+                    context.Result = new ObjectResult(GetError(webApiException))
+                    {
+                        StatusCode = (int)HttpStatusCode.BadRequest
+                    };
+                }
+                    break;
+
+                case ValidationException validationException:
+                {
+                    context.Result = new ObjectResult(GetError(validationException, "validation-failed"))
+                    {
+                        StatusCode = (int)HttpStatusCode.BadRequest
+                    };
+                }
+                    break;
+
+                case AuthenticationException authenticationException:
+                {
+                    context.Result = new ObjectResult(GetError(authenticationException, "authentication-failed"))
+                    {
+                        StatusCode = (int)HttpStatusCode.Forbidden
+                    };
                 }
                     break;
 
                 default:
                 {
-                    context.Result = new ObjectResult(new Error
+                    context.Result = new ObjectResult(GetError(context.Exception, "unknown"))
                     {
-                        Message = context.Exception.Message,
-                        Code = "unknown",
-                        // Id = // ToDo: generate new on the fly
-                    });
-                    context.HttpContext.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+                        StatusCode = (int) HttpStatusCode.InternalServerError
+                    };
                 }
                     break;
             }
-
-            context.ExceptionHandled = true;
-        }
-
-        private ObjectResult GetResult(WebApiBoilerplateException exception)
-        {
-            return new ObjectResult(GetError(exception));
         }
 
         private Error GetError(WebApiBoilerplateException exception)
@@ -54,6 +71,31 @@ namespace WebApiBoilerplate.ActionFilters
                 Id = exception.ExceptionId,
                 Code = exception.Code,
                 Message = exception.Message
+            };
+        }
+
+        private Error GetError(Exception exception, string code)
+        {
+            return new Error
+            {
+                Id = WebApiBoilerplateException.GetNewId(),
+                Code = code,
+                Message = exception.Message
+            };
+        }
+
+        private Error GetError(ValidationException exception, string code)
+        {
+            return new ValidationError
+            {
+                Id = WebApiBoilerplateException.GetNewId(),
+                Code = code,
+                Message = exception.Message,
+                Validations = exception.Errors.Select(error => new ValidationFieldError
+                {
+                    Description = error.ErrorMessage,
+                    Field = error.PropertyName,
+                }).ToList()
             };
         }
     }

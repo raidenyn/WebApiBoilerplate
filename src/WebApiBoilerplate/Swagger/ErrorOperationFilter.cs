@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Net;
+using System.Text.RegularExpressions;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using WebApiBoilerplate.Framework.Utils;
 using WebApiBoilerplate.Protocol;
 
 namespace WebApiBoilerplate.Swagger
@@ -15,7 +17,7 @@ namespace WebApiBoilerplate.Swagger
                 operation.Responses.Add(statusCode.ToString("D"),
                     new Response
                     {
-                        Description = statusCode.ToString("G"),
+                        Description = StringExtensions.AddSpaces(statusCode.ToString("G")),
                         Schema = context.SchemaRegistry.GetOrRegister(type)
                     });
             }

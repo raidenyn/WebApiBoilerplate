@@ -6,7 +6,7 @@ namespace WebApiBoilerplate.Framework
     public abstract class WebApiBoilerplateException : Exception
     {
         [NotNull]
-        public string ExceptionId { get; } = Guid.NewGuid().ToString("n");
+        public string ExceptionId { get; } = GetNewId();
 
         [NotNull] 
         public virtual string Code => GetType().Name;
@@ -16,5 +16,10 @@ namespace WebApiBoilerplate.Framework
 
         protected WebApiBoilerplateException(string message, Exception innerException) : base(message, innerException)
         { }
+
+        public static string GetNewId()
+        {
+            return Guid.NewGuid().ToString("n");
+        }
     }
 }

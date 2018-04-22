@@ -1,6 +1,6 @@
 ﻿namespace WebApiBoilerplate.Core.Authentication
 {
-    public class AuthenticatedUser
+    public class AuthUser
     {
         public long Id { get; set; }
     }

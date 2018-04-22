@@ -18,8 +18,8 @@ namespace WebApiBoilerplate.ActionFilters
                 context.Result = new ObjectResult(new ValidationError
                 {
                     Message = "Request contains invalid data. See validation error list.",
-                    Code = "validation-fault",
-                    Validations = context.ModelState.Root.ToValidationMessages().ToList()
+                    Code = "validation-failed",
+                    Validations = context.ModelState.ToValidationMessages().ToList()
                 });
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             }
@@ -29,28 +29,21 @@ namespace WebApiBoilerplate.ActionFilters
     public static class ModelStateExtensions
     {
         [NotNull]
-        public static IEnumerable<string> ToValidationMessages([NotNull] this ModelStateEntry root)
+        public static IEnumerable<ValidationFieldError> ToValidationMessages([NotNull] this ModelStateDictionary modelState)
         {
-            var nodes = new Stack<ModelStateEntry>();
-            nodes.Push(root);
-
-            while (nodes.Count > 0)
+            foreach (var key in modelState.Keys)
             {
-                var current = nodes.Pop();
+                var state = modelState[key];
 
-                if (current.Children != null)
+                if (state.Errors != null)
                 {
-                    foreach (var child in current.Children)
+                    foreach (var error in state.Errors)
                     {
-                        nodes.Push(child);
-                    }
-                }
-
-                if (current.Errors != null)
-                {
-                    foreach (var error in current.Errors)
-                    {
-                        yield return error.ErrorMessage;
+                        yield return new ValidationFieldError
+                        {
+                            Description = error.ErrorMessage,
+                            Field = key
+                        };
                     }
                 }
             }

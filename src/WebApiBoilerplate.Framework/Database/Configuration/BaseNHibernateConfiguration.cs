@@ -15,6 +15,7 @@ namespace WebApiBoilerplate.Framework.Database.Configuration
     {
         private readonly NHibernateOptions<TDbContext> _options;
 
+        [UsedImplicitly]
         public BaseNHibernateConfiguration([NotNull] IOptions<NHibernateOptions<TDbContext>> options)
         {
             _options = options?.Value ?? throw new ArgumentNullException(nameof(options));

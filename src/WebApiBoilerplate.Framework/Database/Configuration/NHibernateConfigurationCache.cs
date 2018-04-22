@@ -21,6 +21,7 @@ namespace WebApiBoilerplate.Framework.Database.Configuration
 
         public bool Exists => _options.FilePath != null && File.Exists(FullPath);
 
+        [UsedImplicitly]
         public NHibernateConfigurationCache(
             [NotNull] IOptions<NHibernateConfigurationCacheOptions<TDbContext>> options,
             [CanBeNull] ILogger<NHibernateConfigurationCache<TDbContext>> logger)

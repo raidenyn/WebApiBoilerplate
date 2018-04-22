@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApiBoilerplate.Core.Services;
 using WebApiBoilerplate.Protocol;
 
 namespace WebApiBoilerplate.Controllers
 {
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/users")]
     public class UserController : Controller

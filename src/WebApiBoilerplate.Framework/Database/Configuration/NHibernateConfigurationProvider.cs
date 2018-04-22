@@ -9,6 +9,7 @@ namespace WebApiBoilerplate.Framework.Database.Configuration
         private readonly BaseNHibernateConfiguration<TDbContext> _baseConfiguration;
         private readonly NHibernateConfigurationCache<TDbContext> _cache;
 
+        [UsedImplicitly]
         public NHibernateConfigurationProvider(
             [NotNull] BaseNHibernateConfiguration<TDbContext> baseConfiguration,
             [NotNull] NHibernateConfigurationCache<TDbContext> cache

@@ -1,9 +1,14 @@
-﻿using FluentValidation.AspNetCore;
+﻿using System;
+using FluentValidation.AspNetCore;
+using JetBrains.Annotations;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using NHibernate.Connection;
 using NHibernate.Dialect;
@@ -33,6 +38,7 @@ namespace WebApiBoilerplate
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        [UsedImplicitly]
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddLogging(options =>
@@ -48,10 +54,55 @@ namespace WebApiBoilerplate
                     db.Dialect<MsSql2012Dialect>();
                     db.Driver<Sql2008ClientDriver>();
                     db.ConnectionProvider<DriverConnectionProvider>();
+
+                    db.LogSqlInConsole = true;
                 });
             });
 
             services.AddCoreServices();
+
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // ToDo: replace to services.AddHttpContextAccessor();
+
+            services.AddIdentity<AuthUser, AuthUserRole>(options =>
+                {
+                    // Password settings
+                    options.Password.RequireDigit = true;
+                    options.Password.RequiredLength = 8;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequiredUniqueChars = 6;
+
+                    // Lockout settings
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                    options.Lockout.MaxFailedAccessAttempts = 10;
+                    options.Lockout.AllowedForNewUsers = true;
+
+                    // User settings
+                    options.User.RequireUniqueEmail = true;
+                })
+                .AddUserStore<UserStore>()
+                .AddRoleStore<RoleStore>()
+                .AddUserManager<UserManager>()
+                .AddSignInManager<SignInManager>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthentication(o =>
+                {
+                    o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    o.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                })
+                .AddCookie(options =>
+                {
+                    // Cookie settings
+                    options.Cookie.HttpOnly = true;
+                    options.Cookie.Name = "WebApiBoilerplate-auth";
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                    options.LoginPath = null;
+                    options.AccessDeniedPath = null;
+                    options.SlidingExpiration = true;
+                });
+                
 
             services.AddMvcCore().AddVersionedApiExplorer(
                 options =>
@@ -89,27 +140,32 @@ namespace WebApiBoilerplate
                 options.DescribeStringEnumsInCamelCase();
                 options.IncludeXmlComments(typeof(ObjectInfo).Assembly.DocumentationXmlPath());
                 options.IncludeXmlComments(typeof(UserController).Assembly.DocumentationXmlPath());
+
+                options.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = "header",
+                    Type = "apiKey"
+                });
+
+                options.AddSecurityDefinition("Cookies", new ApiKeyScheme
+                {
+                    Description = "Cookies Authorization header using the Cookies scheme. Example: \"Cookies: Bearer {token}\"",
+                    Name = "Cookies",
+                    In = "header",
+                    Type = "apiKey"
+                });
             });
 
             services.AddApiVersioning(options =>
             {
                 options.ReportApiVersions = true;
             });
-
-            services.AddIdentityCore<AuthenticatedUser>(x =>
-                {
-
-                }).AddUserStore<AuthStore>()
-                .AddDefaultTokenProviders();
-
-            services.AddAuthentication(o =>
-            {
-                o.DefaultScheme = IdentityConstants.ApplicationScheme;
-                o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-            }).AddJwtBearer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        [UsedImplicitly]
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())

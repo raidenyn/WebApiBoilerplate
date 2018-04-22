@@ -32,6 +32,22 @@ namespace WebApiBoilerplate.Protocol
         /// <summary>
         /// Validation messages
         /// </summary>
-        public List<string> Validations { get; set; }
+        public List<ValidationFieldError> Validations { get; set; }
+    }
+
+    /// <summary>
+    /// Validation of property error
+    /// </summary>
+    public class ValidationFieldError
+    {
+        /// <summary>
+        /// Field name
+        /// </summary>
+        public string Field { get; set; }
+
+        /// <summary>
+        /// Error description
+        /// </summary>
+        public string Description { get; set; }
     }
 }

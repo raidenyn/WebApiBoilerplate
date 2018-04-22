@@ -39,7 +39,8 @@ namespace WebApiBoilerplate.Swagger
                 {
                     foreach (var validatorRule in validators)
                     {
-                        if (validatorRule is NotNullValidator)
+                        if (validatorRule is NotNullValidator ||
+                            validatorRule is NotEmptyValidator)
                         {
                             model.Required.Add(key);
                         }

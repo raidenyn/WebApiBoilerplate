@@ -13,6 +13,7 @@ namespace WebApiBoilerplate.Framework.Database.Configuration
     {
         public NHibernate.Cfg.Configuration Configuration { get; } = new NHibernate.Cfg.Configuration();
 
+        [UsedImplicitly]
         public NHibernateOptions()
         {
             Environment.UseReflectionOptimizer = true;
@@ -27,8 +28,9 @@ namespace WebApiBoilerplate.Framework.Database.Configuration
             Configuration.Properties[Environment.Isolation] = IsolationLevel.ReadCommitted.ToString();
 
 #if DEBUG
-            //Configuration.Properties[Environment.ShowSql] = "true";
-            //Configuration.Properties[Environment.FormatSql] = "true";
+            Configuration.Properties[Environment.ShowSql] = "true";
+            Configuration.Properties[Environment.FormatSql] = "true";
+            Configuration.Properties[Environment.UseSqlComments] = "true";
             //Configuration.Properties[Environment.GenerateStatistics] = "true";
 #endif
 

@@ -16,9 +16,11 @@ namespace WebApiBoilerplate.DataModel
 
         public virtual string LastName { get; set; }
 
-        public virtual string PasswordHash { get; set; }
+        public virtual string Email { get; set; }
 
-        public virtual string PasswordSolt { get; set; }
+        public virtual bool EmailIsConfirmed { get; set; }
+
+        public virtual string PasswordHash { get; set; }
 
         public virtual DateTime CreatedAt { get; protected set; }
 
@@ -51,6 +53,29 @@ namespace WebApiBoilerplate.DataModel
             var query = from user in dbContext.Session.Query<User>()
                 where user.Login == login
                 select user;
+
+            query = query.WithOptions(x =>
+            {
+                x.SetCacheable(true);
+            });
+
+            return query.SingleOrDefaultAsync(cancellationToken);
+        }
+
+        [NotNull, ItemCanBeNull]
+        public static Task<User> FindByEmailAsync(
+            [NotNull] WebApiBorilerplateDbContext dbContext,
+            [NotNull] string email,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var query = from user in dbContext.Session.Query<User>()
+                where user.Email == email
+                select user;
+
+            query = query.WithOptions(x =>
+            {
+                x.SetCacheable(true);
+            });
 
             return query.SingleOrDefaultAsync(cancellationToken);
         }
