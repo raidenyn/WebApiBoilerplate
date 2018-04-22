@@ -19,6 +19,7 @@ namespace WebApiBoilerplate.Framework.Web.Transactions
             _next = next;
         }
 
+        [UsedImplicitly]
         public async Task InvokeAsync([NotNull] HttpContext context)
         {
             var logger = context.RequestServices.GetService<ILogger<TransactionContextMiddleware<TDbContext>>>();

@@ -9,11 +9,15 @@ namespace WebApiBoilerplate.DataModel.Mapping
             Property(x => x.Login, m => m.NotNullable(true));
             Property(x => x.FirstName, m => m.NotNullable(false));
             Property(x => x.LastName, m => m.NotNullable(false));
-            Property(x => x.PasswordHash, m => m.NotNullable(false));
             Property(x => x.Email, m => m.NotNullable(true));
             Property(x => x.EmailIsConfirmed, m => m.NotNullable(true));
             Property(x => x.CreatedAt, m => m.NotNullable(true));
             Property(x => x.RemovedAt, m => m.NotNullable(false));
+            Property(x => x.PasswordHash, m =>
+            {
+                m.NotNullable(false);
+                m.Lazy(true);
+            });
         }
     }
 }

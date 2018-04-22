@@ -40,18 +40,31 @@ namespace WebApiBoilerplate.Controllers
             return _userRepository.GetAsync(request);
         }
 
+        /// <summary>
+        /// Create a new user
+        /// </summary>
+        /// <param name="request">New user data</param>
+        /// <returns>ID of the created user</returns>
         [HttpPost]
         public Task<ObjectInfo> Create([FromBody] CreateUserRequest request)
         {
             return _userRepository.CreateAsync(request);
         }
 
+        /// <summary>
+        /// Update a exists user
+        /// </summary>
+        /// <param name="request">New data of the exists user</param>
         [HttpPut("{id:int}")]
         public Task Update([FromBody] UpdateUserRequest request)
         {
             return _userRepository.UpdateAsync(request);
         }
 
+        /// <summary>
+        /// Mark a user as removed
+        /// </summary>
+        /// <param name="request">ID and options of removing user</param>
         [HttpDelete("{id:int}")]
         public Task Remove(RemoveUserRequest request)
         {

@@ -1,9 +1,8 @@
-﻿using System.Net;
+﻿using System.Diagnostics;
+using System.Net;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using WebApiBoilerplate.Core.Authentication;
@@ -17,17 +16,17 @@ namespace WebApiBoilerplate.Controllers
     public class AccountController: Controller
     {
         [NotNull]
-        private readonly UserManager<AuthUser> _userManager;
+        private readonly UserManager _userManager;
         
         [NotNull]
-        private readonly SignInManager<AuthUser> _signInManager;
+        private readonly SignInManager _signInManager;
 
         [NotNull]
         private readonly IAccountService _accountService;
 
         public AccountController(
-            [NotNull] UserManager<AuthUser> userManager, 
-            [NotNull] SignInManager<AuthUser> signInManager, 
+            [NotNull] UserManager userManager, 
+            [NotNull] SignInManager signInManager, 
             [NotNull] IAccountService accountService)
         {
             _userManager = userManager;
@@ -35,6 +34,11 @@ namespace WebApiBoilerplate.Controllers
             _accountService = accountService;
         }
 
+        /// <summary>
+        /// Sign in user with login and password
+        /// </summary>
+        /// <param name="request">User credentials</param>
+        /// <returns>Auth cookies</returns>
         [HttpPost("sign-in")]
         [AllowAnonymous]
         [SwaggerResponse((int)HttpStatusCode.OK)]
@@ -50,6 +54,7 @@ namespace WebApiBoilerplate.Controllers
 
             if (result.Succeeded)
             {
+                Trace.Write(User.Identity.IsAuthenticated);
                 return NoContent();
             }
 
@@ -82,6 +87,21 @@ namespace WebApiBoilerplate.Controllers
             });
         }
 
+        /// <summary>
+        /// Sigon out current user
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("sign-out")]
+        public Task SignOut()
+        {
+            return _signInManager.SignOutAsync();
+        }
+
+        /// <summary>
+        /// Sign up a new user
+        /// </summary>
+        /// <param name="request">New user credentials</param>
+        /// <returns>Auth cookies</returns>
         [HttpPost("sign-up")]
         [AllowAnonymous]
         public async Task SignUp([FromBody] SignUpAccountRequest request)
@@ -90,8 +110,7 @@ namespace WebApiBoilerplate.Controllers
 
             await _signInManager.SignInAsync(
                 authenticatedUser,
-                isPersistent: false,
-                authenticationMethod: CookieAuthenticationDefaults.AuthenticationScheme);
+                isPersistent: false);
         }
     }
 }

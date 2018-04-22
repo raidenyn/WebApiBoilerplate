@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
-using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using WebApiBoilerplate.Framework.Utils;
@@ -12,18 +13,24 @@ namespace WebApiBoilerplate.Swagger
     {
         public void Apply(Operation operation, OperationFilterContext context)
         {
-            void AddErrorResponse(HttpStatusCode statusCode, Type type)
+            void AddErrorResponse(HttpStatusCode statusCode, Type type = null)
             {
                 operation.Responses.Add(statusCode.ToString("D"),
                     new Response
                     {
                         Description = StringExtensions.AddSpaces(statusCode.ToString("G")),
-                        Schema = context.SchemaRegistry.GetOrRegister(type)
+                        Schema = type != null ? context.SchemaRegistry.GetOrRegister(type) : null
                     });
             }
 
             AddErrorResponse(HttpStatusCode.BadRequest, typeof(ValidationError));
             AddErrorResponse(HttpStatusCode.InternalServerError, typeof(Error));
+
+            if (context.ApiDescription.ActionDescriptor.FilterDescriptors.Any(f => f.Filter is AuthorizeFilter))
+            {
+                AddErrorResponse(HttpStatusCode.Forbidden);
+                AddErrorResponse(HttpStatusCode.Unauthorized);
+            }
         }
     }
 }

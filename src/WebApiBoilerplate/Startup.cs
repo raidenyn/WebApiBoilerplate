@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Net;
+using System.Threading.Tasks;
 using FluentValidation.AspNetCore;
 using JetBrains.Annotations;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -46,23 +47,6 @@ namespace WebApiBoilerplate
                 options.AddConfiguration(Configuration);
             });
 
-            services.AddNHibernateDbContext<WebApiBorilerplateDbContext>(config =>
-            {
-                config.Connection(db =>
-                {
-                    db.ConnectionString = @"Data Source=mssql;Initial Catalog=WebApiBoilerplate.Database;Persist Security Info=True;User ID=sa;Password=wiEPzF9pXnuVuejTN3p7;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=10;Encrypt=False;TrustServerCertificate=True";
-                    db.Dialect<MsSql2012Dialect>();
-                    db.Driver<Sql2008ClientDriver>();
-                    db.ConnectionProvider<DriverConnectionProvider>();
-
-                    db.LogSqlInConsole = true;
-                });
-            });
-
-            services.AddCoreServices();
-
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // ToDo: replace to services.AddHttpContextAccessor();
-
             services.AddIdentity<AuthUser, AuthUserRole>(options =>
                 {
                     // Password settings
@@ -87,22 +71,36 @@ namespace WebApiBoilerplate
                 .AddSignInManager<SignInManager>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication(o =>
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.Name = "WebApiBoilerplate-auth";
+                options.Events.OnRedirectToLogin = context =>
                 {
-                    o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    o.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                })
-                .AddCookie(options =>
+                    context.Response.StatusCode = (int) HttpStatusCode.Unauthorized;
+                    return Task.CompletedTask;
+                };
+                options.Events.OnRedirectToAccessDenied = context =>
                 {
-                    // Cookie settings
-                    options.Cookie.HttpOnly = true;
-                    options.Cookie.Name = "WebApiBoilerplate-auth";
-                    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-                    options.LoginPath = null;
-                    options.AccessDeniedPath = null;
-                    options.SlidingExpiration = true;
+                    context.Response.StatusCode = (int) HttpStatusCode.Forbidden;
+                    return Task.CompletedTask;
+                };
+            });
+
+            services.AddNHibernateDbContext<WebApiBorilerplateDbContext>(config =>
+            {
+                config.Connection(db =>
+                {
+                    db.ConnectionString = @"Data Source=localhost,14336;Initial Catalog=WebApiBoilerplate.Database;Persist Security Info=True;User ID=sa;Password=wiEPzF9pXnuVuejTN3p7;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=10;Encrypt=False;TrustServerCertificate=True";
+                    db.Dialect<MsSql2012Dialect>();
+                    db.Driver<Sql2008ClientDriver>();
+                    db.ConnectionProvider<DriverConnectionProvider>();
+
+                    db.LogSqlInConsole = true;
                 });
-                
+            });
+
+            services.AddCoreServices();
 
             services.AddMvcCore().AddVersionedApiExplorer(
                 options =>
@@ -141,17 +139,9 @@ namespace WebApiBoilerplate
                 options.IncludeXmlComments(typeof(ObjectInfo).Assembly.DocumentationXmlPath());
                 options.IncludeXmlComments(typeof(UserController).Assembly.DocumentationXmlPath());
 
-                options.AddSecurityDefinition("Bearer", new ApiKeyScheme
-                {
-                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                    Name = "Authorization",
-                    In = "header",
-                    Type = "apiKey"
-                });
-
                 options.AddSecurityDefinition("Cookies", new ApiKeyScheme
                 {
-                    Description = "Cookies Authorization header using the Cookies scheme. Example: \"Cookies: Bearer {token}\"",
+                    Description = "Cookies Authorization header using the Cookies scheme. Example: \"Cookies: WebApiBoilerplate-auth:{token}; \"",
                     Name = "Cookies",
                     In = "header",
                     Type = "apiKey"
@@ -160,7 +150,7 @@ namespace WebApiBoilerplate
 
             services.AddApiVersioning(options =>
             {
-                options.ReportApiVersions = true;
+                options.ReportApiVersions = false;
             });
         }
 
@@ -173,11 +163,11 @@ namespace WebApiBoilerplate
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseAuthentication();
+
             app.UseNHibernateTransactionMiddleware<WebApiBorilerplateDbContext>();
 
             app.UseMvc();
-
-            app.UseAuthentication();
 
             app.UseSwagger();
 
