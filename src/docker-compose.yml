@@ -5,7 +5,7 @@ services:
     image: webapiboilerplate
     build:
       context: .
-      dockerfile: WebApiBoilerplate/Dockerfile
+      dockerfile: WebApiBoilerplate.WebApi/Dockerfile
   mssql:
     image: microsoft/mssql-server-linux
     environment:

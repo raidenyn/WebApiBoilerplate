@@ -5,10 +5,10 @@ EXPOSE 80
 FROM microsoft/aspnetcore-build:2.0 AS build
 WORKDIR /src
 COPY WebApiBoilerplate.sln ./
-COPY WebApiBoilerplate/WebApiBoilerplate.csproj WebApiBoilerplate/
+COPY WebApiBoilerplate.WebApi/WebApiBoilerplate.csproj WebApiBoilerplate.WebApi/
 RUN dotnet restore -nowarn:msb3202,nu1503
 COPY . .
-WORKDIR /src/WebApiBoilerplate
+WORKDIR /src/WebApiBoilerplate.WebApi
 RUN dotnet build -c Release -o /app
 
 FROM build AS publish
@@ -17,4 +17,4 @@ RUN dotnet publish -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-ENTRYPOINT ["dotnet", "WebApiBoilerplate.dll"]
+ENTRYPOINT ["dotnet", "WebApiBoilerplate.WebApi.dll"]

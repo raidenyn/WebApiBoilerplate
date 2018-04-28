@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2002
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiBoilerplate", "WebApiBoilerplate\WebApiBoilerplate.csproj", "{A4EBC602-A18F-4870-B7D2-297AA9B8752E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiBoilerplate.WebApi", "WebApiBoilerplate.WebApi\WebApiBoilerplate.WebApi.csproj", "{A4EBC602-A18F-4870-B7D2-297AA9B8752E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E43CF833-7941-4309-B729-7E386471193F} = {E43CF833-7941-4309-B729-7E386471193F}
 	EndProjectSection
@@ -23,7 +23,7 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "WebApiBoilerplate.Database"
 		{0633FD59-C017-4BE0-8590-8ED4F8E88FF4} = {0633FD59-C017-4BE0-8590-8ED4F8E88FF4}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiBoilerplate.Framework.Web", "WebApiBoilerplate.Framework.Web\WebApiBoilerplate.Framework.Web.csproj", "{3DB34E1F-8D89-4F9E-8219-F5E167D9D43D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiBoilerplate.Framework.Web", "WebApiBoilerplate.Framework.Web\WebApiBoilerplate.Framework.Web.csproj", "{3DB34E1F-8D89-4F9E-8219-F5E167D9D43D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

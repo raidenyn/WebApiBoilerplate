@@ -6,7 +6,7 @@ using FluentValidation.Validators;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace WebApiBoilerplate.Swagger
+namespace WebApiBoilerplate.WebApi.Swagger
 {
     public class FluentValidationRules : ISchemaFilter
     {

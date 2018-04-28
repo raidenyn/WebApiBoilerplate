@@ -9,7 +9,7 @@ using WebApiBoilerplate.Framework;
 using WebApiBoilerplate.Protocol;
 using SystemException = WebApiBoilerplate.Framework.SystemException;
 
-namespace WebApiBoilerplate.ActionFilters
+namespace WebApiBoilerplate.WebApi.ActionFilters
 {
     public class ErrorFormmaterFilter: ExceptionFilterAttribute
     {

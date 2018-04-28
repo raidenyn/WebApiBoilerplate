@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using WebApiBoilerplate.Protocol;
 
-namespace WebApiBoilerplate.ActionFilters
+namespace WebApiBoilerplate.WebApi.ActionFilters
 {
     public class RequestValidationFilter: ActionFilterAttribute
     {

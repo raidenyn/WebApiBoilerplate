@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace WebApiBoilerplate
+namespace WebApiBoilerplate.WebApi
 {
     public class Program
     {

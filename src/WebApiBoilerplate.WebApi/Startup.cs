@@ -15,8 +15,8 @@ using NHibernate.Connection;
 using NHibernate.Dialect;
 using NHibernate.Driver;
 using Swashbuckle.AspNetCore.Swagger;
-using WebApiBoilerplate.ActionFilters;
-using WebApiBoilerplate.Controllers;
+using WebApiBoilerplate.WebApi.ActionFilters;
+using WebApiBoilerplate.WebApi.Controllers;
 using WebApiBoilerplate.Core;
 using WebApiBoilerplate.Core.Authentication;
 using WebApiBoilerplate.Core.Authentication.Stores;
@@ -25,9 +25,9 @@ using WebApiBoilerplate.Framework.Database;
 using WebApiBoilerplate.Framework.Utils;
 using WebApiBoilerplate.Framework.Web.Transactions;
 using WebApiBoilerplate.Protocol;
-using WebApiBoilerplate.Swagger;
+using WebApiBoilerplate.WebApi.Swagger;
 
-namespace WebApiBoilerplate
+namespace WebApiBoilerplate.WebApi
 {
     public class Startup
     {

@@ -7,13 +7,13 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <LangVersion>latest</LangVersion>
-    <DocumentationFile>bin\Debug\netcoreapp2.0\WebApiBoilerplate.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netcoreapp2.0\WebApiBoilerplate.WebApi.xml</DocumentationFile>
     <NoWarn>1701;1702;1705;CS1591</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <LangVersion>latest</LangVersion>
-    <DocumentationFile>bin\Release\netcoreapp2.0\WebApiBoilerplate.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\netcoreapp2.0\WebApiBoilerplate.WebApi.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

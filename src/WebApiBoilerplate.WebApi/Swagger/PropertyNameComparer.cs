@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WebApiBoilerplate.Swagger
+namespace WebApiBoilerplate.WebApi.Swagger
 {
     public class PropertyNameComparer: IEqualityComparer<string>
     {

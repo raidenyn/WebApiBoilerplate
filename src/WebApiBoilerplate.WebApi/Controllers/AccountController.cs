@@ -9,7 +9,7 @@ using WebApiBoilerplate.Core.Authentication;
 using WebApiBoilerplate.Core.Services;
 using WebApiBoilerplate.Protocol;
 
-namespace WebApiBoilerplate.Controllers
+namespace WebApiBoilerplate.WebApi.Controllers
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/account")]

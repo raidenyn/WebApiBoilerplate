@@ -8,7 +8,7 @@ using WebApiBoilerplate.Core.Services;
 using WebApiBoilerplate.Framework.Web.Extensions;
 using WebApiBoilerplate.Protocol;
 
-namespace WebApiBoilerplate.Controllers
+namespace WebApiBoilerplate.WebApi.Controllers
 {
     [Authorize]
     [ApiVersion("1.0")]

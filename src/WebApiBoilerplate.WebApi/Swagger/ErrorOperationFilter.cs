@@ -7,7 +7,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using WebApiBoilerplate.Framework.Utils;
 using WebApiBoilerplate.Protocol;
 
-namespace WebApiBoilerplate.Swagger
+namespace WebApiBoilerplate.WebApi.Swagger
 {
     public class ErrorOperationFilter : IOperationFilter
     {
