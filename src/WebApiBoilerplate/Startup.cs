@@ -91,7 +91,10 @@ namespace WebApiBoilerplate
             {
                 config.Connection(db =>
                 {
-                    db.ConnectionString = @"Data Source=localhost,14336;Initial Catalog=WebApiBoilerplate.Database;Persist Security Info=True;User ID=sa;Password=wiEPzF9pXnuVuejTN3p7;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=10;Encrypt=False;TrustServerCertificate=True";
+                    var server = Environment.OSVersion.Platform == PlatformID.Unix 
+                        ? "Data Source=mssql;" 
+                        : "Data Source=localhost,14336;";
+                    db.ConnectionString = server + @"Initial Catalog=WebApiBoilerplate.Database;Persist Security Info=True;User ID=sa;Password=wiEPzF9pXnuVuejTN3p7;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=10;Encrypt=False;TrustServerCertificate=True";
                     db.Dialect<MsSql2012Dialect>();
                     db.Driver<Sql2008ClientDriver>();
                     db.ConnectionProvider<DriverConnectionProvider>();
@@ -138,14 +141,6 @@ namespace WebApiBoilerplate
                 options.DescribeStringEnumsInCamelCase();
                 options.IncludeXmlComments(typeof(ObjectInfo).Assembly.DocumentationXmlPath());
                 options.IncludeXmlComments(typeof(UserController).Assembly.DocumentationXmlPath());
-
-                options.AddSecurityDefinition("Cookies", new ApiKeyScheme
-                {
-                    Description = "Cookies Authorization header using the Cookies scheme. Example: \"Cookies: WebApiBoilerplate-auth:{token}; \"",
-                    Name = "Cookies",
-                    In = "header",
-                    Type = "apiKey"
-                });
             });
 
             services.AddApiVersioning(options =>

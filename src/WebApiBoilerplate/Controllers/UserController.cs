@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApiBoilerplate.Core.Services;
+using WebApiBoilerplate.Framework.Web.Extensions;
 using WebApiBoilerplate.Protocol;
 
 namespace WebApiBoilerplate.Controllers
@@ -18,6 +20,22 @@ namespace WebApiBoilerplate.Controllers
         public UserController([NotNull] IUserRepository userRepository)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+        }
+
+        /// <summary>
+        /// Returns current user data
+        /// </summary>
+        [HttpGet("current")]
+        public Task<User> Current()
+        {
+            var userId = User.GetUserId();
+
+            if (!userId.HasValue)
+            {
+                throw new AuthenticationException();
+            }
+
+            return _userRepository.GetAsync(new GetUserRequest { Id = userId.Value });
         }
 
         /// <summary>

@@ -92,6 +92,7 @@ namespace WebApiBoilerplate.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("sign-out")]
+        [AllowAnonymous]
         public Task SignOut()
         {
             return _signInManager.SignOutAsync();
