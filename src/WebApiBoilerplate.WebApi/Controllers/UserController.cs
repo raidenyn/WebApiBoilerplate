@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApiBoilerplate.Core.Services;
 using WebApiBoilerplate.Framework.Web.Extensions;
-using WebApiBoilerplate.Protocol;
+using WebApiBoilerplate.Core.Protocol;
+using WebApiBoilerplate.Framework.Protocol;
 
 namespace WebApiBoilerplate.WebApi.Controllers
 {

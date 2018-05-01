@@ -4,6 +4,8 @@ using JetBrains.Annotations;
 using WebApiBoilerplate.Core.Framework;
 using WebApiBoilerplate.DataModel;
 using WebApiBoilerplate.Framework;
+using WebApiBoilerplate.Framework.Database;
+using WebApiBoilerplate.Framework.Protocol;
 using WebApiBoilerplate.Framework.Services;
 
 namespace WebApiBoilerplate.Core.Services.Impl
@@ -19,7 +21,7 @@ namespace WebApiBoilerplate.Core.Services.Impl
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
-        public Task<Protocol.PagedList<Protocol.UserInfo>> ListAsync(Protocol.ListUserRequest request)
+        public Task<PagedList<Protocol.UserInfo>> ListAsync(Protocol.ListUserRequest request)
         {
             var users = _dbContext.Session.Query<User>();
 
@@ -51,7 +53,7 @@ namespace WebApiBoilerplate.Core.Services.Impl
             };
         }
 
-        public async Task<Protocol.ObjectInfo> CreateAsync(Protocol.CreateUserRequest request)
+        public async Task<ObjectInfo> CreateAsync(Protocol.CreateUserRequest request)
         {
             var user = User.Create(_dbContext);
 

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using WebApiBoilerplate.Core.Authentication;
 using WebApiBoilerplate.Core.Services;
-using WebApiBoilerplate.Protocol;
+using WebApiBoilerplate.Core.Protocol;
 
 namespace WebApiBoilerplate.WebApi.Controllers
 {

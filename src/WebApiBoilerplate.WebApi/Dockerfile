@@ -9,7 +9,6 @@ COPY WebApiBoilerplate.WebApi/WebApiBoilerplate.WebApi.csproj WebApiBoilerplate.
 COPY WebApiBoilerplate.Core/WebApiBoilerplate.Core.csproj WebApiBoilerplate.Core/
 COPY WebApiBoilerplate.DataModel/WebApiBoilerplate.DataModel.csproj WebApiBoilerplate.DataModel/
 COPY WebApiBoilerplate.Framework/WebApiBoilerplate.Framework.csproj WebApiBoilerplate.Framework/
-COPY WebApiBoilerplate.Protocol/WebApiBoilerplate.Protocol.csproj WebApiBoilerplate.Protocol/
 RUN dotnet restore -nowarn:msb3202,nu1503
 COPY . .
 WORKDIR /src/WebApiBoilerplate.WebApi

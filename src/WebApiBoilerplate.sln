@@ -14,8 +14,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiBoilerplate.Core", "W
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiBoilerplate.Framework", "WebApiBoilerplate.Framework\WebApiBoilerplate.Framework.csproj", "{76744F12-6532-42E8-BD3F-AD29AD90252E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiBoilerplate.Protocol", "WebApiBoilerplate.Protocol\WebApiBoilerplate.Protocol.csproj", "{E28FE0D2-5ADA-4A8E-9561-9B4115C37286}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiBoilerplate.DataModel", "WebApiBoilerplate.DataModel\WebApiBoilerplate.DataModel.csproj", "{972B5C43-5DC2-4E79-BFA7-799E72A89D51}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "WebApiBoilerplate.Database", "WebApiBoilerplate.Database\WebApiBoilerplate.Database.sqlproj", "{E43CF833-7941-4309-B729-7E386471193F}"
@@ -58,12 +56,6 @@ Global
 		{76744F12-6532-42E8-BD3F-AD29AD90252E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{76744F12-6532-42E8-BD3F-AD29AD90252E}.Tests|Any CPU.ActiveCfg = Debug|Any CPU
 		{76744F12-6532-42E8-BD3F-AD29AD90252E}.Tests|Any CPU.Build.0 = Debug|Any CPU
-		{E28FE0D2-5ADA-4A8E-9561-9B4115C37286}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E28FE0D2-5ADA-4A8E-9561-9B4115C37286}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E28FE0D2-5ADA-4A8E-9561-9B4115C37286}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E28FE0D2-5ADA-4A8E-9561-9B4115C37286}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E28FE0D2-5ADA-4A8E-9561-9B4115C37286}.Tests|Any CPU.ActiveCfg = Debug|Any CPU
-		{E28FE0D2-5ADA-4A8E-9561-9B4115C37286}.Tests|Any CPU.Build.0 = Debug|Any CPU
 		{972B5C43-5DC2-4E79-BFA7-799E72A89D51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{972B5C43-5DC2-4E79-BFA7-799E72A89D51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{972B5C43-5DC2-4E79-BFA7-799E72A89D51}.Release|Any CPU.ActiveCfg = Release|Any CPU

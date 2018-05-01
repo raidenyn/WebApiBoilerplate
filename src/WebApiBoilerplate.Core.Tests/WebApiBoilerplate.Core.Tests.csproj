@@ -36,6 +36,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="run-docker-tests.cmd" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\WebApiBoilerplate.Core\WebApiBoilerplate.Core.csproj" />
   </ItemGroup>
 </Project>

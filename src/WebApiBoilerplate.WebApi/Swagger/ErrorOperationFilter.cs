@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using WebApiBoilerplate.Framework.Utils;
-using WebApiBoilerplate.Protocol;
+using WebApiBoilerplate.Core.Protocol;
 
 namespace WebApiBoilerplate.WebApi.Swagger
 {

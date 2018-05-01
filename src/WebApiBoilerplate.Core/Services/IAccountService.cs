@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using JetBrains.Annotations;
 using WebApiBoilerplate.Core.Authentication;
-using WebApiBoilerplate.Protocol;
+using WebApiBoilerplate.Core.Protocol;
 
 namespace WebApiBoilerplate.Core.Services
 {

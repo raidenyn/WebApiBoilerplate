@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 using WebApiBoilerplate.Framework.Database;
-using WebApiBoilerplate.Protocol;
+using WebApiBoilerplate.Framework.Protocol;
 
 namespace WebApiBoilerplate.Core.Framework
 {

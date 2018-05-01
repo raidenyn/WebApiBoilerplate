@@ -3,7 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using WebApiBoilerplate.Core.Services;
 using WebApiBoilerplate.Core.Tests.Framework;
 using WebApiBoilerplate.Framework;
-using WebApiBoilerplate.Protocol;
+using WebApiBoilerplate.Core.Protocol;
+using WebApiBoilerplate.Framework.Protocol;
 using Xunit;
 
 namespace WebApiBoilerplate.Core.Tests

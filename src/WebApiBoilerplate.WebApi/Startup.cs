@@ -5,12 +5,10 @@ using FluentValidation.AspNetCore;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using NHibernate.Connection;
 using NHibernate.Dialect;
@@ -25,7 +23,7 @@ using WebApiBoilerplate.DataModel;
 using WebApiBoilerplate.Framework.Database;
 using WebApiBoilerplate.Framework.Utils;
 using WebApiBoilerplate.Framework.Web.Transactions;
-using WebApiBoilerplate.Protocol;
+using WebApiBoilerplate.Framework.Protocol;
 using WebApiBoilerplate.WebApi.Swagger;
 
 namespace WebApiBoilerplate.WebApi

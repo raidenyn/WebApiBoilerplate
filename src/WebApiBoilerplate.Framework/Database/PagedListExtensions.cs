@@ -4,9 +4,9 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using NHibernate.Linq;
-using WebApiBoilerplate.Protocol;
+using WebApiBoilerplate.Framework.Protocol;
 
-namespace WebApiBoilerplate.Core.Framework
+namespace WebApiBoilerplate.Framework.Database
 {
     public static class PagedListExtensions
     {
