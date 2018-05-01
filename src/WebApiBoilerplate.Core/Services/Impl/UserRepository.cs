@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using WebApiBoilerplate.Core.Framework;
 using WebApiBoilerplate.DataModel;
+using WebApiBoilerplate.Framework;
 using WebApiBoilerplate.Framework.Services;
 
 namespace WebApiBoilerplate.Core.Services.Impl
@@ -34,10 +35,16 @@ namespace WebApiBoilerplate.Core.Services.Impl
         {
             var user = await _dbContext.Session.GetAsync<User>(request.Id);
 
+            if (user.RemovedAt != null)
+            {
+                throw new ObjectNotFoundException(typeof(User), request.Id);
+            }
+
             return new Protocol.User
             {
                 Id = user.Id,
                 Login = user.Login,
+                Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 CreatedAt = user.CreatedAt,
@@ -51,6 +58,7 @@ namespace WebApiBoilerplate.Core.Services.Impl
             user.Login = request.Login;
             user.FirstName = request.FirstName;
             user.LastName = request.LastName;
+            user.Email = request.Email;
 
             await user.SaveAsync(withFlush: true);
 
@@ -64,6 +72,7 @@ namespace WebApiBoilerplate.Core.Services.Impl
             user.Login = request.Login;
             user.FirstName = request.FirstName;
             user.LastName = request.LastName;
+            user.Email = request.Email;
 
             await user.SaveAsync(withFlush: true).ConfigureAwait(false);
         }

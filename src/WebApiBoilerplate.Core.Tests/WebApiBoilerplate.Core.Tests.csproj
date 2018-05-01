@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+
+    <StartupObject>WebApiBoilerplate.Core.Tests.Program</StartupObject>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <NoWarn>1701;1702;1705;NU1701</NoWarn>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
+    <PackageReference Include="SqlDeploy" Version="0.0.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.5.0-preview2-26406-04" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.console" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Database\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\db\WebApiBoilerplate.Database\**\*" Exclude="**\*.dbmdl;**\*.jfm;**\*.refactorlog;**\*.publish.xml;**\bin\**;**\obj\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>Database\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebApiBoilerplate.Core\WebApiBoilerplate.Core.csproj" />
+  </ItemGroup>
+</Project>

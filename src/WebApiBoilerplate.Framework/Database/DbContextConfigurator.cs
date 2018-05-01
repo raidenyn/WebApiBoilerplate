@@ -26,6 +26,9 @@ namespace WebApiBoilerplate.Framework.Database
         {
             _services = services ?? throw new ArgumentNullException(nameof(services));
 
+            services.AddOptions();
+            services.AddLogging();
+
             services.AddSingleton<BaseNHibernateConfiguration<TDbContext>>();
             services.AddSingleton<NHibernateConfigurationCache<TDbContext>>();
             services.AddSingleton<INHibernateConfigurationProvider<TDbContext>, NHibernateConfigurationProvider<TDbContext>>();

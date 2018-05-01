@@ -46,6 +46,11 @@ namespace WebApiBoilerplate.Protocol
         public string Login { get; set; }
 
         /// <summary>
+        /// User's email
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
         /// User's first name
         /// </summary>
         public string FirstName { get; set; }
@@ -120,6 +125,10 @@ namespace WebApiBoilerplate.Protocol
         /// </summary>
         public string LastName { get; set; }
 
+        /// <summary>
+        /// User's email
+        /// </summary>
+        public string Email { get; set; }
 
         /// <summary>
         /// Validator
@@ -135,6 +144,7 @@ namespace WebApiBoilerplate.Protocol
                 RuleFor(request => request.Login).NotEmpty().MaximumLength(50);
                 RuleFor(request => request.FirstName).MaximumLength(50);
                 RuleFor(request => request.LastName).MaximumLength(50);
+                RuleFor(request => request.Email).MaximumLength(50).NotEmpty().EmailAddress();
             }
         }
     }
@@ -164,6 +174,10 @@ namespace WebApiBoilerplate.Protocol
         /// </summary>
         public string LastName { get; set; }
 
+        /// <summary>
+        /// User's email
+        /// </summary>
+        public string Email { get; set; }
 
         /// <summary>
         /// Validator
@@ -180,6 +194,7 @@ namespace WebApiBoilerplate.Protocol
                 RuleFor(request => request.Login).NotEmpty().MaximumLength(50);
                 RuleFor(request => request.FirstName).MaximumLength(50);
                 RuleFor(request => request.LastName).MaximumLength(50);
+                RuleFor(request => request.Email).MaximumLength(50).NotEmpty().EmailAddress();
             }
         }
     }

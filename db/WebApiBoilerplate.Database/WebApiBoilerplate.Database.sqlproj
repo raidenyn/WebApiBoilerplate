@@ -66,6 +66,7 @@
   <ItemGroup>
     <Build Include="dbo\Tables\User.sql" />
     <Build Include="dbo\Tables\IdentityInfo.sql" />
+    <Build Include="dbo\Tables\Order.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="WebApiBoilerplate.Database.refactorlog" />
