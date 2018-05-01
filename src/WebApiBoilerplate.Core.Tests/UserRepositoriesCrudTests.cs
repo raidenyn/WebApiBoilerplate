@@ -9,9 +9,9 @@ using Xunit;
 
 namespace WebApiBoilerplate.Core.Tests
 {
-    public class UserRepositoriesTests: DatabaseTests
+    public class UserRepositoriesCrudTests: DatabaseTests
     {
-        public UserRepositoriesTests(DatabaseFixture fixture) : base(fixture)
+        public UserRepositoriesCrudTests(DatabaseFixture fixture) : base(fixture)
         { }
 
         [Fact]

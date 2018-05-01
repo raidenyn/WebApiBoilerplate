@@ -19,6 +19,7 @@ using WebApiBoilerplate.WebApi.Controllers;
 using WebApiBoilerplate.Core;
 using WebApiBoilerplate.Core.Authentication;
 using WebApiBoilerplate.Core.Authentication.Stores;
+using WebApiBoilerplate.Core.Protocol;
 using WebApiBoilerplate.DataModel;
 using WebApiBoilerplate.Framework.Database;
 using WebApiBoilerplate.Framework.Utils;
@@ -139,6 +140,7 @@ namespace WebApiBoilerplate.WebApi
                 options.DescribeAllParametersInCamelCase();
                 options.DescribeStringEnumsInCamelCase();
                 options.IncludeXmlComments(typeof(ObjectInfo).Assembly.DocumentationXmlPath());
+                options.IncludeXmlComments(typeof(UserInfo).Assembly.DocumentationXmlPath());
                 options.IncludeXmlComments(typeof(UserController).Assembly.DocumentationXmlPath());
             });
 
