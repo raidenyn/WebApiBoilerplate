@@ -16,5 +16,12 @@ services:
       - 14336:1433
     volumes:
       - db-data:/var/opt/mssql/data
+  webapiboilerplate.core.tests:
+    image: webapiboilerplatecoretests
+    build:
+      context: .
+      dockerfile: WebApiBoilerplate.Core.Tests/Dockerfile
+
 volumes:
   db-data:
+
