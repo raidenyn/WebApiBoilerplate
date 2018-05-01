@@ -1,4 +1,0 @@
-﻿CREATE TABLE [dbo].[IdentityInfo]
-(
-	[Hi] BIGINT NOT NULL PRIMARY KEY
-)
