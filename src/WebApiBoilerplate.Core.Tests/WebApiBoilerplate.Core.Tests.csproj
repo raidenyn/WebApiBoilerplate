@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="..\..\db\WebApiBoilerplate.Database\**\*" Exclude="**\*.dbmdl;**\*.jfm;**\*.refactorlog;**\*.publish.xml;**\bin\**;**\obj\**">
+    <Content Include="..\WebApiBoilerplate.Database\**\*" Exclude="**\*.dbmdl;**\*.jfm;**\*.refactorlog;**\*.publish.xml;**\bin\**;**\obj\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Link>Database\%(RecursiveDir)%(Filename)%(Extension)</Link>
     </Content>

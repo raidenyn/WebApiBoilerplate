@@ -18,14 +18,9 @@
     <DockerTargetOS>Linux</DockerTargetOS>
     <ProjectVersion>2.0</ProjectVersion>
     <ProjectGuid>0633fd59-c017-4be0-8590-8ed4f8e88ff4</ProjectGuid>
-  </PropertyGroup>
-  <PropertyGroup Label="Globals" Condition=" '$(Configuration)' == 'Release' OR '$(Configuration)' == 'Debug'">
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>http://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>webapiboilerplate</DockerServiceName>
-  </PropertyGroup>
-  <PropertyGroup Label="Globals" Condition=" '$(Configuration)' == 'Tests'">
-    <DockerServiceName>webapiboilerplate.core.tests</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

@@ -18,14 +18,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiBoilerplate.Protocol"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiBoilerplate.DataModel", "WebApiBoilerplate.DataModel\WebApiBoilerplate.DataModel.csproj", "{972B5C43-5DC2-4E79-BFA7-799E72A89D51}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "WebApiBoilerplate.Database", "..\db\WebApiBoilerplate.Database\WebApiBoilerplate.Database.sqlproj", "{E43CF833-7941-4309-B729-7E386471193F}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "WebApiBoilerplate.Database", "WebApiBoilerplate.Database\WebApiBoilerplate.Database.sqlproj", "{E43CF833-7941-4309-B729-7E386471193F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0633FD59-C017-4BE0-8590-8ED4F8E88FF4} = {0633FD59-C017-4BE0-8590-8ED4F8E88FF4}
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiBoilerplate.Framework.Web", "WebApiBoilerplate.Framework.Web\WebApiBoilerplate.Framework.Web.csproj", "{3DB34E1F-8D89-4F9E-8219-F5E167D9D43D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiBoilerplate.Core.Tests", "WebApiBoilerplate.Core.Tests\WebApiBoilerplate.Core.Tests.csproj", "{8850D314-A3AE-424D-BFCD-1084511F1F5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiBoilerplate.Core.Tests", "WebApiBoilerplate.Core.Tests\WebApiBoilerplate.Core.Tests.csproj", "{8850D314-A3AE-424D-BFCD-1084511F1F5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

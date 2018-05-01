@@ -1,22 +1,18 @@
 version: '3'
 
 services:
-  webapiboilerplate:
-    image: webapiboilerplate
+  webapiboilerplate.core.tests:
+    image: webapiboilerplatecoretests
     build:
       context: .
-      dockerfile: WebApiBoilerplate.WebApi/Dockerfile
+      dockerfile: Dockerfile
   mssql:
     image: microsoft/mssql-server-linux
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=wiEPzF9pXnuVuejTN3p7
       - MSSQL_PID=Express
-    ports:
-      - 14336:1433
-    volumes:
-      - db-data:/var/opt/mssql/data
-
-volumes:
-  db-data:
-
+    ports: 
+      - "1433:1433"
+    logging:
+      driver: none
