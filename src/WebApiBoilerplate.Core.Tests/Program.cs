@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using NUnit.Common;
 
 namespace WebApiBoilerplate.Core.Tests
 {
@@ -6,9 +7,9 @@ namespace WebApiBoilerplate.Core.Tests
     {
         public static int Main(string[] args)
         {
-            args = new [] { typeof(Program).Assembly.Location }.Concat(args).ToArray();
+            var runner = new NUnitLite.AutoRun(typeof(Program).Assembly);
 
-            return Xunit.ConsoleClient.Program.Main(args);
+            return runner.Execute(args, new ColorConsoleWriter(colorEnabled: true), Console.In);
         }
     }
 }

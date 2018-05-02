@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using NHibernate.Connection;
 using NHibernate.Dialect;
@@ -10,19 +12,25 @@ using WebApiBoilerplate.Framework.Database;
 
 namespace WebApiBoilerplate.Core.Tests.Framework
 {
-    public class DatabaseFixture : IDisposable
+    public sealed class DatabaseFixture : IDisposable
     {
         private readonly ISqlDatabase _database;
 
         public IServiceProvider ServiceProvider { get; }
 
-        public DatabaseFixture()
+        private DatabaseFixture([NotNull] ISqlDatabase database, [NotNull] IServiceProvider serviceProvider)
+        {
+            _database = database;
+            ServiceProvider = serviceProvider;
+        }
+
+        public static async Task<DatabaseFixture> CreateAsync()
         {
             var deployer = new SqlProjectDeployer("Database/WebApiBoilerplate.Database.sqlproj");
 
-            _database = deployer.RecreateToAsync(
+            var database = await deployer.RecreateToAsync(
                 new SqlConnection(TestDatabaseConnectionString.ServerConnectionString),
-                TestDatabaseConnectionString.DatabaseName).Result;
+                TestDatabaseConnectionString.DatabaseName);
 
             //setup our DI
             var services = new ServiceCollection();
@@ -36,19 +44,24 @@ namespace WebApiBoilerplate.Core.Tests.Framework
                     db.Driver<Sql2008ClientDriver>();
                     db.ConnectionProvider<DriverConnectionProvider>();
 
-                    db.LogSqlInConsole = true;
+                    db.LogSqlInConsole = false;
                 });
             });
 
             services.AddCoreServices();
 
-            ServiceProvider = services.BuildServiceProvider();
+            return new DatabaseFixture(database, services.BuildServiceProvider()); ;
+        }
+
+        public async Task DisposeAsync()
+        {
+            await _database.DeleteAsync().ConfigureAwait(false);
+            _database.Dispose();
         }
 
         public void Dispose()
         {
-            _database.DeleteAsync().Wait();
-            _database.Dispose();
+            DisposeAsync().Wait();
         }
     }
 }

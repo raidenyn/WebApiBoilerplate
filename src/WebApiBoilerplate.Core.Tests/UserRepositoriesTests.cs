@@ -1,22 +1,18 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using NUnit.Framework;
 using WebApiBoilerplate.Core.Services;
 using WebApiBoilerplate.Core.Tests.Framework;
 using WebApiBoilerplate.Framework;
 using WebApiBoilerplate.Protocol;
-using Xunit;
 
 namespace WebApiBoilerplate.Core.Tests
 {
     public class UserRepositoriesTests: DatabaseTests
     {
-        public UserRepositoriesTests(DatabaseFixture fixture) : base(fixture)
-        { }
-
-        [Fact]
-        public async Task<ObjectInfo> CreateUserTest()
+        public async Task<ObjectInfo> CreateUserAsync()
         {
-            var userRepo = CurrentScope.ServiceProvider.GetService<IUserRepository>();
+            var userRepo = State.Current.ServiceProvider.GetService<IUserRepository>();
 
             ObjectInfo result = await userRepo.CreateAsync(new CreateUserRequest
             {
@@ -29,34 +25,40 @@ namespace WebApiBoilerplate.Core.Tests
             Assert.NotNull(result);
             Assert.True(result.Id > 0, "Id of the a new object should be greater than 0.");
 
-            await CommitAsync();
+            await State.Current.CommitAsync();
 
             return result;
         }
 
-        [Fact]
+        [Test]
+        public Task CreateUserTest()
+        {
+            return CreateUserAsync();
+        }
+
+        [Test]
         public async Task CreateAndGetUserTest()
         {
-            var creationResult = await CreateUserTest();
+            var creationResult = await CreateUserAsync();
 
-            await CommitAndContinueAsync();
+            await State.CommitAndContinueAsync();
 
-            var userRepo = CurrentScope.ServiceProvider.GetService<IUserRepository>();
+            var userRepo = State.Current.ServiceProvider.GetService<IUserRepository>();
 
             var user = await userRepo.GetAsync(new GetUserRequest { Id = creationResult.Id });
 
             Assert.NotNull(user);
-            Assert.Equal(creationResult.Id, user.Id);
+            Assert.AreEqual(creationResult.Id, user.Id);
         }
 
-        [Fact]
+        [Test]
         public async Task CreateAndUpdateAndGetUserTest()
         {
-            var creationResult = await CreateUserTest();
+            var creationResult = await CreateUserAsync();
 
-            await CommitAndContinueAsync();
+            await State.CommitAndContinueAsync();
 
-            var userRepo = CurrentScope.ServiceProvider.GetService<IUserRepository>();
+            var userRepo = State.Current.ServiceProvider.GetService<IUserRepository>();
 
             await userRepo.UpdateAsync(new UpdateUserRequest
             {
@@ -67,34 +69,34 @@ namespace WebApiBoilerplate.Core.Tests
                 Email = "email@user.new"
             });
 
-            await CommitAndContinueAsync();
+            await State.CommitAndContinueAsync();
 
-            userRepo = CurrentScope.ServiceProvider.GetService<IUserRepository>();
+            userRepo = State.Current.ServiceProvider.GetService<IUserRepository>();
 
             var user = await userRepo.GetAsync(new GetUserRequest { Id = creationResult.Id });
 
             Assert.NotNull(user);
-            Assert.Equal(creationResult.Id, user.Id);
-            Assert.Equal("UserLoginNew", user.Login);
-            Assert.Equal("LastNameNew", user.LastName);
-            Assert.Equal("FirstNameNew", user.FirstName);
-            Assert.Equal("email@user.new", user.Email);
+            Assert.AreEqual(creationResult.Id, user.Id);
+            Assert.AreEqual("UserLoginNew", user.Login);
+            Assert.AreEqual("LastNameNew", user.LastName);
+            Assert.AreEqual("FirstNameNew", user.FirstName);
+            Assert.AreEqual("email@user.new", user.Email);
         }
 
-        [Fact]
+        [Test]
         public async Task CreateAndRemoveAndGetUserTest()
         {
-            var creationResult = await CreateUserTest();
+            var creationResult = await CreateUserAsync();
 
-            await CommitAndContinueAsync();
+            await State.CommitAndContinueAsync();
 
-            var userRepo = CurrentScope.ServiceProvider.GetService<IUserRepository>();
+            var userRepo = State.Current.ServiceProvider.GetService<IUserRepository>();
 
             await userRepo.RemoveAsync(new RemoveUserRequest{ Id = creationResult.Id});
 
-            await CommitAndContinueAsync();
+            await State.CommitAndContinueAsync();
 
-            await Assert.ThrowsAsync<ObjectNotFoundException>(async () =>
+            Assert.ThrowsAsync<ObjectNotFoundException>(async () =>
             {
                 await userRepo.GetAsync(new GetUserRequest {Id = creationResult.Id});
             });
