@@ -1,4 +1,4 @@
-version: '3'
+version: '3.4'
 
 services:
   webapiboilerplate:
@@ -9,9 +9,9 @@ services:
   mssql:
     image: microsoft/mssql-server-linux
     environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=wiEPzF9pXnuVuejTN3p7
-      - MSSQL_PID=Express
+      - ACCEPT_EULA="Y"
+      - SA_PASSWORD="wiEPzF9pXnuVuejTN3p7"
+      - MSSQL_PID="Express"
     ports:
       - 14336:1433
     volumes:
