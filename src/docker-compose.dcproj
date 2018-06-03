@@ -1,25 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" Sdk="Microsoft.Docker.Sdk">
-  <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|AnyCPU">
-      <Configuration>Debug</Configuration>
-      <Platform>AnyCPU</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|AnyCPU">
-      <Configuration>Release</Configuration>
-      <Platform>AnyCPU</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Tests|AnyCPU">
-      <Configuration>Tests</Configuration>
-      <Platform>AnyCPU</Platform>
-    </ProjectConfiguration>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <DockerTargetOS>Linux</DockerTargetOS>
     <ProjectVersion>2.1</ProjectVersion>
+    <DockerTargetOS>Linux</DockerTargetOS>
     <ProjectGuid>0633fd59-c017-4be0-8590-8ed4f8e88ff4</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>http://localhost:{ServicePort}/swagger</DockerServiceUrl>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
     <DockerServiceName>webapiboilerplate</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>

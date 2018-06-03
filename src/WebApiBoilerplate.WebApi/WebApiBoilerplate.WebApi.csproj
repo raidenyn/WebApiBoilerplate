@@ -1,26 +1,27 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <UserSecretsId>bce02c93-7842-4803-81d9-795f119e078b</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
-    <NoWarn>1701;1702;1705;CS1591</NoWarn>
+    <NoWarn>1701;1702;CS1591</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netcoreapp2.0\WebApiBoilerplate.WebApi.xml</DocumentationFile>
-    <DefineConstants>TRACE;DEBUG;NETCOREAPP;NETCOREAPP2_1</DefineConstants>
+    <DocumentationFile>bin\Debug\netcoreapp2.1\WebApiBoilerplate.WebApi.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netcoreapp2.0\WebApiBoilerplate.WebApi.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\netcoreapp2.1\WebApiBoilerplate.WebApi.xml</DocumentationFile>
+    <WarningLevel>2</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,12 +35,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\WebApiBoilerplate.Framework.Web\WebApiBoilerplate.Framework.Web.csproj" />
     <ProjectReference Include="..\WebApiBoilerplate.Core\WebApiBoilerplate.Core.csproj" />
+    <ProjectReference Include="..\WebApiBoilerplate.Framework.Web\WebApiBoilerplate.Framework.Web.csproj" />
   </ItemGroup>
 
 </Project>

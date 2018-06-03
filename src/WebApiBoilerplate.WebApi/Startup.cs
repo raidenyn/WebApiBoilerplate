@@ -1,8 +1,7 @@
-﻿using System;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 using FluentValidation.AspNetCore;
-using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -14,17 +13,17 @@ using NHibernate.Connection;
 using NHibernate.Dialect;
 using NHibernate.Driver;
 using Swashbuckle.AspNetCore.Swagger;
-using WebApiBoilerplate.WebApi.ActionFilters;
-using WebApiBoilerplate.WebApi.Controllers;
 using WebApiBoilerplate.Core;
 using WebApiBoilerplate.Core.Authentication;
 using WebApiBoilerplate.Core.Authentication.Stores;
 using WebApiBoilerplate.Core.Protocol;
 using WebApiBoilerplate.DataModel;
 using WebApiBoilerplate.Framework.Database;
+using WebApiBoilerplate.Framework.Protocol;
 using WebApiBoilerplate.Framework.Utils;
 using WebApiBoilerplate.Framework.Web.Transactions;
-using WebApiBoilerplate.Framework.Protocol;
+using WebApiBoilerplate.WebApi.ActionFilters;
+using WebApiBoilerplate.WebApi.Controllers;
 using WebApiBoilerplate.WebApi.Swagger;
 
 namespace WebApiBoilerplate.WebApi
@@ -39,7 +38,6 @@ namespace WebApiBoilerplate.WebApi
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        [UsedImplicitly]
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddLogging(options =>
@@ -48,23 +46,23 @@ namespace WebApiBoilerplate.WebApi
             });
 
             services.AddIdentity<AuthUser, AuthUserRole>(options =>
-                {
-                    // Password settings
-                    options.Password.RequireDigit = true;
-                    options.Password.RequiredLength = 8;
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequireUppercase = true;
-                    options.Password.RequireLowercase = false;
-                    options.Password.RequiredUniqueChars = 6;
+            {
+                // Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredUniqueChars = 6;
 
-                    // Lockout settings
-                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-                    options.Lockout.MaxFailedAccessAttempts = 10;
-                    options.Lockout.AllowedForNewUsers = true;
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+                options.Lockout.AllowedForNewUsers = true;
 
-                    // User settings
-                    options.User.RequireUniqueEmail = true;
-                })
+                // User settings
+                options.User.RequireUniqueEmail = true;
+            })
                 .AddUserStore<UserStore>()
                 .AddRoleStore<RoleStore>()
                 .AddUserManager<UserManager>()
@@ -77,12 +75,12 @@ namespace WebApiBoilerplate.WebApi
                 options.Cookie.Name = "WebApiBoilerplate-auth";
                 options.Events.OnRedirectToLogin = context =>
                 {
-                    context.Response.StatusCode = (int) HttpStatusCode.Unauthorized;
+                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     return Task.CompletedTask;
                 };
                 options.Events.OnRedirectToAccessDenied = context =>
                 {
-                    context.Response.StatusCode = (int) HttpStatusCode.Forbidden;
+                    context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
                     return Task.CompletedTask;
                 };
             });
@@ -91,8 +89,8 @@ namespace WebApiBoilerplate.WebApi
             {
                 config.Connection(db =>
                 {
-                    var server = Environment.OSVersion.Platform == PlatformID.Unix 
-                        ? "Data Source=mssql;" 
+                    var server = Environment.OSVersion.Platform == PlatformID.Unix
+                        ? "Data Source=mssql;"
                         : "Data Source=localhost,14336;";
                     db.ConnectionString = server + @"Initial Catalog=WebApiBoilerplate.Database;Persist Security Info=True;User ID=sa;Password=wiEPzF9pXnuVuejTN3p7;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=10;Encrypt=False;TrustServerCertificate=True";
                     db.Dialect<MsSql2012Dialect>();
@@ -124,13 +122,13 @@ namespace WebApiBoilerplate.WebApi
             {
                 options.RegisterValidatorsFromAssemblyContaining<ObjectInfo>();
                 options.ImplicitlyValidateChildProperties = true;
-            });
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Info
                 {
-                    Title = "WebApiBoilerplate API", 
+                    Title = "WebApiBoilerplate API",
                     Version = "v1",
                 });
                 options.OperationFilter<ErrorOperationFilter>();
@@ -153,7 +151,6 @@ namespace WebApiBoilerplate.WebApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        [UsedImplicitly]
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseAuthentication();
