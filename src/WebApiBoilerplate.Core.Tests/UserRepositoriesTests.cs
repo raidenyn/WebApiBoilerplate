@@ -1,14 +1,15 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using WebApiBoilerplate.Core.Protocol;
 using WebApiBoilerplate.Core.Services;
 using WebApiBoilerplate.Core.Tests.Framework;
 using WebApiBoilerplate.Framework;
-using WebApiBoilerplate.Protocol;
+using WebApiBoilerplate.Framework.Protocol;
 
 namespace WebApiBoilerplate.Core.Tests
 {
-    public class UserRepositoriesTests: DatabaseTests
+    public class UserRepositoriesTests : DatabaseTests
     {
         public async Task<ObjectInfo> CreateUserAsync()
         {
@@ -92,13 +93,13 @@ namespace WebApiBoilerplate.Core.Tests
 
             var userRepo = State.Current.ServiceProvider.GetService<IUserRepository>();
 
-            await userRepo.RemoveAsync(new RemoveUserRequest{ Id = creationResult.Id});
+            await userRepo.RemoveAsync(new RemoveUserRequest { Id = creationResult.Id });
 
             await State.CommitAndContinueAsync();
 
             Assert.ThrowsAsync<ObjectNotFoundException>(async () =>
             {
-                await userRepo.GetAsync(new GetUserRequest {Id = creationResult.Id});
+                await userRepo.GetAsync(new GetUserRequest { Id = creationResult.Id });
             });
         }
     }

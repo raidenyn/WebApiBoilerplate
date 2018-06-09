@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using WebApiBoilerplate.Protocol;
+using WebApiBoilerplate.Core.Protocol;
 
 namespace WebApiBoilerplate.WebApi.ActionFilters
 {

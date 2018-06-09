@@ -4,8 +4,8 @@
 .gitignore
 .vs
 .vscode
-.dbmdl
-.jfm
+**/*.dbmdl
+**/*.jfm
 docker-compose.yml
 docker-compose.*.yml
 */bin

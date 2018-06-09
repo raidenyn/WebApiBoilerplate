@@ -5,7 +5,7 @@ using FluentValidation.Results;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Identity;
 
-namespace WebApiBoilerplate.Core.Framework
+namespace WebApiBoilerplate.Framework.Validations
 {
     public static class ValidationExtensions
     {

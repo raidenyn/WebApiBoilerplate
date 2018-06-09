@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using WebApiBoilerplate.Core.Authentication;
 using WebApiBoilerplate.Core.Services;
-using WebApiBoilerplate.Protocol;
+using WebApiBoilerplate.Core.Protocol;
 
 namespace WebApiBoilerplate.WebApi.Controllers
 {
-    [ApiVersion("1.0")]
+    [ApiController, ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/account")]
-    public class AccountController: Controller
+    public class AccountController: ControllerBase
     {
         [NotNull]
         private readonly UserManager _userManager;

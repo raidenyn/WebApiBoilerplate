@@ -6,14 +6,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApiBoilerplate.Core.Services;
 using WebApiBoilerplate.Framework.Web.Extensions;
-using WebApiBoilerplate.Protocol;
+using WebApiBoilerplate.Core.Protocol;
+using WebApiBoilerplate.Framework.Protocol;
 
 namespace WebApiBoilerplate.WebApi.Controllers
 {
     [Authorize]
-    [ApiVersion("1.0")]
+    [ApiController, ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/users")]
-    public class UserController : Controller
+    public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
 

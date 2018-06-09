@@ -6,7 +6,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using WebApiBoilerplate.Framework;
-using WebApiBoilerplate.Protocol;
+using WebApiBoilerplate.Core.Protocol;
 using SystemException = WebApiBoilerplate.Framework.SystemException;
 
 namespace WebApiBoilerplate.WebApi.ActionFilters

@@ -6,7 +6,8 @@ using WebApiBoilerplate.Core.Authentication;
 using WebApiBoilerplate.Core.Framework;
 using WebApiBoilerplate.DataModel;
 using WebApiBoilerplate.Framework.Services;
-using WebApiBoilerplate.Protocol;
+using WebApiBoilerplate.Core.Protocol;
+using WebApiBoilerplate.Framework.Validations;
 using User = WebApiBoilerplate.DataModel.User;
 
 namespace WebApiBoilerplate.Core.Services.Impl

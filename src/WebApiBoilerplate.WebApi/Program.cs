@@ -1,19 +1,17 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace WebApiBoilerplate.WebApi
 {
     public class Program
     {
-        public static Task Main(string[] args)
+        public static void Main(string[] args)
         {
-            return BuildWebHost(args).RunAsync();
+            CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                   .UseStartup<Startup>()
-                   .Build();
+                .UseStartup<Startup>();
     }
 }

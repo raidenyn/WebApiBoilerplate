@@ -1,0 +1,37 @@
+﻿@page
+@using WebApiBoilerplate.WebApi.Helpers
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>WebApiBoilerplate WebApi</title>
+    <link rel="stylesheet" href="https://gitcdn.link/repo/Chalarangelo/mini.css/master/dist/mini-default.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>WebApiBoilerplate WebApi @ApplicationInfo.Version</h1>
+        <p>
+            Boilerplate project for creation WebApi with database
+        </p>
+        <h2>Links</h2>
+        <ul>
+            <li>
+                <a href="/swagger">Formal Swagger Docuentation</a>
+            </li>
+            <li>
+                <a href="https://github.com/raidenyn/WebApiBoilerplate">Project repo</a>
+            </li>
+            <li>
+                <a href="https://github.com/raidenyn/WebApiBoilerplate/wiki">Documentation</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <p>&copy; @CopyrightInfo.DateRange(startYear: 2018) RaidenYN</p>
+    </div>
+</body>
+</html>
