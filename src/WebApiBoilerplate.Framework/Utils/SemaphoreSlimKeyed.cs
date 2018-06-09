@@ -37,7 +37,7 @@ namespace WebApiBoilerplate.Framework.Utils
             return new Releaser(slim);
         }
 
-        private struct Releaser : IDisposable
+        private class Releaser : IDisposable
         {
             private readonly SemaphoreSlim _semaphoreSlim;
 

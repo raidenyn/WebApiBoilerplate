@@ -3,12 +3,9 @@ using System.Threading.Tasks;
 using FluentValidation;
 using JetBrains.Annotations;
 using WebApiBoilerplate.Core.Authentication;
-using WebApiBoilerplate.Core.Framework;
 using WebApiBoilerplate.DataModel;
 using WebApiBoilerplate.Framework.Services;
-using WebApiBoilerplate.Core.Protocol;
 using WebApiBoilerplate.Framework.Validations;
-using User = WebApiBoilerplate.DataModel.User;
 
 namespace WebApiBoilerplate.Core.Services.Impl
 {
@@ -26,7 +23,7 @@ namespace WebApiBoilerplate.Core.Services.Impl
             _userManager = userManager;
         }
 
-        public async Task<AuthUser> CreateUserAsync(SignUpAccountRequest request)
+        public async Task<AuthUser> CreateUserAsync(Protocol.SignUpAccountRequest request)
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
 
@@ -49,9 +46,9 @@ namespace WebApiBoilerplate.Core.Services.Impl
             if (!result.Succeeded)
             {
                 var validations = result.Errors.ToValidationFailures(
-                    (nameof(SignUpAccountRequest.Password), "password"), 
-                    (nameof(SignUpAccountRequest.Email), "email"),
-                    (nameof(SignUpAccountRequest.Login), "user name"));
+                    (nameof(Protocol.SignUpAccountRequest.Password), "password"), 
+                    (nameof(Protocol.SignUpAccountRequest.Email), "email"),
+                    (nameof(Protocol.SignUpAccountRequest.Login), "user name"));
                 throw new ValidationException("Request validation failed", validations);
             }
 
