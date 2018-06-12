@@ -5,6 +5,7 @@ using FluentValidation;
 using FluentValidation.Validators;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using WebApiBoilerplate.Framework.Utils;
 
 namespace WebApiBoilerplate.WebApi.Swagger
 {
@@ -28,7 +29,7 @@ namespace WebApiBoilerplate.WebApi.Swagger
 
             var validatorDescriptor = validator.CreateDescriptor();
 
-            model.Required = model.Required ?? new List<string>();
+            var required = new List<string>();
 
             var members = validatorDescriptor.GetMembersWithValidators()
                 .ToDictionary(p => p.Key, PropertyNameComparer);
@@ -42,10 +43,16 @@ namespace WebApiBoilerplate.WebApi.Swagger
                         if (validatorRule is NotNullValidator ||
                             validatorRule is NotEmptyValidator)
                         {
-                            model.Required.Add(key);
+                            required.Add(key);
                         }
                     }
                 }
+            }
+
+            if (required.Any())
+            {
+                model.Required = model.Required ?? new List<string>();
+                model.Required.AddRange(required);
             }
         }
     }

@@ -74,7 +74,6 @@
     <RefactorLog Include="WebApiBoilerplate.Database.refactorlog" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="localhost.publish.xml" />
     <None Include="scripts\data\const\IdentityInfo.sql" />
   </ItemGroup>
   <ItemGroup>
